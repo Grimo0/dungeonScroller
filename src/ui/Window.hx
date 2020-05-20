@@ -1,7 +1,7 @@
 package ui;
 
 class Window extends dn.Process {
-	public var win: h2d.Flow;
+	public var win:h2d.Flow;
 
 	public function new() {
 		super(Game.ME);
@@ -10,7 +10,7 @@ class Window extends dn.Process {
 		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		win = new h2d.Flow(root);
-		win.backgroundTile = h2d.Tile.fromColor(0xffffff, 32,32);
+		win.backgroundTile = h2d.Tile.fromColor(0xffffff, 32, 32);
 		win.borderWidth = 7;
 		win.borderHeight = 7;
 		win.layout = Vertical;
@@ -33,15 +33,16 @@ class Window extends dn.Process {
 
 		root.scale(Const.UI_SCALE);
 
-		var w = M.ceil( w()/Const.UI_SCALE );
-		var h = M.ceil( h()/Const.UI_SCALE );
-		win.x = Std.int( w*0.5 - win.outerWidth*0.5 );
-		win.y = Std.int( h*0.5 - win.outerHeight*0.5 );
+		var w = M.ceil(w() / Const.UI_SCALE);
+		var h = M.ceil(h() / Const.UI_SCALE);
+		win.x = Std.int(w * 0.5 - win.outerWidth * 0.5);
+		win.y = Std.int(h * 0.5 - win.outerHeight * 0.5);
 	}
 
 	function onClose() {}
+
 	public function close() {
-		if( !destroyed ) {
+		if (!destroyed) {
 			destroy();
 			onClose();
 		}

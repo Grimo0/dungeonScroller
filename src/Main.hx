@@ -2,49 +2,50 @@ import Data;
 import hxd.Key;
 
 class Main extends dn.Process {
-	public static var ME : Main;
-	public var controller : dn.heaps.Controller;
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public static var ME:Main;
+
+	public var controller:dn.heaps.Controller;
+	public var ca:dn.heaps.Controller.ControllerAccess;
 
 	public function new(s:h2d.Scene) {
 		super();
 		ME = this;
 
-        createRoot(s);
+		createRoot(s);
 
 		// Engine settings
 		hxd.Timer.wantedFPS = Const.FPS;
-		engine.backgroundColor = 0xff<<24|0x111133;
-        #if( hl && !debug )
-        engine.fullScreen = true;
-        #end
+		engine.backgroundColor = 0xff << 24 | 0x111133;
+		#if (hl && !debug)
+		engine.fullScreen = true;
+		#end
 
 		// Resources
-		#if(hl && debug)
+		#if (hl && debug)
 		hxd.Res.initLocal();
-        #else
-        hxd.Res.initEmbed();
-        #end
+		#else
+		hxd.Res.initEmbed();
+		#end
 
-        // Hot reloading
+		// Hot reloading
 		#if debug
-        hxd.res.Resource.LIVE_UPDATE = true;
-        hxd.Res.data.watch(function() {
-            delayer.cancelById("cdb");
+		hxd.res.Resource.LIVE_UPDATE = true;
+		hxd.Res.data.watch(function() {
+			delayer.cancelById("cdb");
 
-            delayer.addS("cdb", function() {
-            	Data.load( hxd.Res.data.entry.getBytes().toString() );
-            	if( Game.ME!=null )
-                    Game.ME.onCdbReload();
-            }, 0.2);
-        });
+			delayer.addS("cdb", function() {
+				Data.load(hxd.Res.data.entry.getBytes().toString());
+				if (Game.ME != null)
+					Game.ME.onCdbReload();
+			}, 0.2);
+		});
 		#end
 
 		// Assets & data init
 		Assets.init();
 		new ui.Console(Assets.fontTiny, s);
 		Lang.init("en");
-		Data.load( hxd.Res.data.entry.getText() );
+		Data.load(hxd.Res.data.entry.getText());
 
 		// Game controller
 		controller = new dn.heaps.Controller(s);
@@ -59,17 +60,16 @@ class Main extends dn.Process {
 
 		// Start
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
-		delayer.addF( startGame, 1 );
+		delayer.addF(startGame, 1);
 	}
 
 	public function startGame() {
-		if( Game.ME!=null ) {
+		if (Game.ME != null) {
 			Game.ME.destroy();
 			delayer.addF(function() {
 				new Game();
 			}, 1);
-		}
-		else
+		} else
 			new Game();
 	}
 
@@ -77,16 +77,16 @@ class Main extends dn.Process {
 		super.onResize();
 
 		// Auto scaling
-		if( Const.AUTO_SCALE_TARGET_WID>0 )
-			Const.SCALE = M.ceil( w()/Const.AUTO_SCALE_TARGET_WID );
-		else if( Const.AUTO_SCALE_TARGET_HEI>0 )
-			Const.SCALE = M.ceil( h()/Const.AUTO_SCALE_TARGET_HEI );
+		if (Const.AUTO_SCALE_TARGET_WID > 0)
+			Const.SCALE = M.ceil(w() / Const.AUTO_SCALE_TARGET_WID);
+		else if (Const.AUTO_SCALE_TARGET_HEI > 0)
+			Const.SCALE = M.ceil(h() / Const.AUTO_SCALE_TARGET_HEI);
 
 		Const.UI_SCALE = Const.SCALE;
 	}
 
-    override function update() {
+	override function update() {
 		Assets.tiles.tmod = tmod;
-        super.update();
-    }
+		super.update();
+	}
 }
