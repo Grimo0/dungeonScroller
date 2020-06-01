@@ -4,3 +4,5 @@
 -lib deepnightLibs
 -main Boot
 -dce full
+# -D analyzer-optimize
+# -D warn-var-shadowing

@@ -3,104 +3,75 @@ class Entity {
 	public static var GC:Array<Entity> = [];
 
 	public var game(get, never):Game;
-
-	inline function get_game()
-		return Game.ME;
+	inline function get_game() return Game.ME;
 
 	public var fx(get, never):Fx;
-
-	inline function get_fx()
-		return Game.ME.fx;
+	inline function get_fx() return Game.ME.fx;
 
 	public var level(get, never):Level;
-
-	inline function get_level()
-		return Game.ME.level;
+	inline function get_level() return Game.ME.level;
 
 	public var destroyed(default, null) = false;
 	public var ftime(get, never):Float;
-
-	inline function get_ftime()
-		return game.ftime;
+	inline function get_ftime() return game.ftime;
 
 	public var tmod(get, never):Float;
-
-	inline function get_tmod()
-		return Game.ME.tmod;
+	inline function get_tmod() return Game.ME.tmod;
 
 	public var hud(get, never):ui.Hud;
-
-	inline function get_hud()
-		return Game.ME.hud;
+	inline function get_hud() return Game.ME.hud;
 
 	public var cd:dn.Cooldown;
 
 	public var uid:Int;
+
+	// Base coordinates
 	public var cx = 0;
 	public var cy = 0;
 	public var xr = 0.5;
 	public var yr = 1.0;
 
+	// Movements
 	public var dx = 0.;
 	public var dy = 0.;
 	public var bdx = 0.;
 	public var bdy = 0.;
 	public var dxTotal(get, never):Float;
-
-	inline function get_dxTotal()
-		return dx + bdx;
-
+	inline function get_dxTotal() return dx + bdx;
 	public var dyTotal(get, never):Float;
-
-	inline function get_dyTotal()
-		return dy + bdy;
+	inline function get_dyTotal() return dy + bdy;
 
 	public var frict = 0.82;
 	public var bumpFrict = 0.93;
-	public var hei:Float = Const.GRID;
-	public var radius = Const.GRID * 0.5;
 
 	public var dir(default, set) = 1;
-	public var sprScaleX = 1.0;
-	public var sprScaleY = 1.0;
-	public var entityVisible = true;
-
+	inline function set_dir(v) { return dir = v > 0 ? 1 : v < 0 ? -1 : dir; }
+	
 	public var spr:HSprite;
 	public var colorAdd:h3d.Vector;
+	public var sprScaleX = 1.0;
+	public var sprScaleY = 1.0;
+	public var visible = true;
+
+	public var hei:Float = Const.GRID;
+	public var radius = Const.GRID * 0.5;
+	public var footX(get, never):Float;
+	inline function get_footX() return (cx + xr) * Const.GRID;
+	public var footY(get, never):Float;
+	inline function get_footY() return (cy + yr) * Const.GRID;
+	public var headX(get, never):Float;
+	inline function get_headX() return footX;
+	public var headY(get, never):Float;
+	inline function get_headY() return footY - hei;
+	public var centerX(get, never):Float;
+	inline function get_centerX() return footX;
+	public var centerY(get, never):Float;
+	inline function get_centerY() return footY - hei * 0.5;
 
 	var debugLabel:Null<h2d.Text>;
 
-	public var footX(get, never):Float;
-
-	inline function get_footX()
-		return (cx + xr) * Const.GRID;
-
-	public var footY(get, never):Float;
-
-	inline function get_footY()
-		return (cy + yr) * Const.GRID;
-
-	public var headX(get, never):Float;
-
-	inline function get_headX()
-		return footX;
-
-	public var headY(get, never):Float;
-
-	inline function get_headY()
-		return footY - hei;
-
-	public var centerX(get, never):Float;
-
-	inline function get_centerX()
-		return footX;
-
-	public var centerY(get, never):Float;
-
-	inline function get_centerY()
-		return footY - hei * 0.5;
-
 	var actions:Array<{id:String, cb:Void->Void, t:Float}> = [];
+
 
 	public function new(x:Int, y:Int) {
 		uid = Const.NEXT_UNIQ;
@@ -109,22 +80,14 @@ class Entity {
 		cd = new dn.Cooldown(Const.FPS);
 		setPosCase(x, y);
 
-		spr = new HSprite(Assets.tiles);
+		spr = new HSprite(Assets.tiles, "fxCircle0");
 		Game.ME.scroller.add(spr, Const.DP_MAIN);
 		spr.colorAdd = colorAdd = new h3d.Vector();
 		spr.setCenterRatio(0.5, 1);
 	}
 
-	inline function set_dir(v) {
-		return dir = v > 0 ? 1 : v < 0 ? -1 : dir;
-	}
-
 	public inline function isAlive() {
 		return !destroyed;
-	}
-
-	public function kill(by:Null<Entity>) {
-		destroy();
 	}
 
 	public function setPosCase(x:Int, y:Int) {
@@ -156,21 +119,6 @@ class Entity {
 
 	public function as<T:Entity>(c:Class<T>):T
 		return Std.downcast(this, c);
-
-	public inline function rnd(min, max, ?sign)
-		return Lib.rnd(min, max, sign);
-
-	public inline function irnd(min, max, ?sign)
-		return Lib.irnd(min, max, sign);
-
-	public inline function pretty(v, ?p = 1)
-		return M.pretty(v, p);
-
-	public inline function dirTo(e:Entity)
-		return e.centerX < centerX ? -1 : 1;
-
-	public inline function dirToAng()
-		return dir == 1 ? 0. : M.PI;
 
 	public inline function getMoveAng()
 		return Math.atan2(dyTotal, dxTotal);
@@ -215,7 +163,7 @@ class Entity {
 	}
 
 	public inline function debugFloat(v:Float, ?c = 0xffffff) {
-		debug(pretty(v), c);
+		debug(M.pretty(v), c);
 	}
 
 	public inline function debug(?v:Dynamic, ?c = 0xffffff) {
@@ -291,7 +239,7 @@ class Entity {
 		spr.y = (cy + yr) * Const.GRID;
 		spr.scaleX = dir * sprScaleX;
 		spr.scaleY = sprScaleY;
-		spr.visible = entityVisible;
+		spr.visible = visible;
 
 		if (debugLabel != null) {
 			debugLabel.x = Std.int(footX - debugLabel.textWidth * 0.5);
@@ -299,9 +247,9 @@ class Entity {
 		}
 	}
 
-	public function fixedUpdate() {} // runs at a "guaranteed" 30 fps
+	public function fixedUpdate() {}
 
-	public function update() { // runs at an unknown fps
+	public function update() {
 		// X
 		var steps = M.ceil(M.fabs(dxTotal * tmod));
 		var step = dxTotal * tmod / steps;
