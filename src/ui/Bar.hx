@@ -1,28 +1,28 @@
 package ui;
 
 class Bar extends h2d.Object {
-	var cd:dn.Cooldown;
-	var bg:h2d.ScaleGrid;
-	var bar:h2d.ScaleGrid;
-	var oldBar:Null<h2d.ScaleGrid>;
+	var cd : dn.Cooldown;
+	var bg : h2d.ScaleGrid;
+	var bar : h2d.ScaleGrid;
+	var oldBar : Null<h2d.ScaleGrid>;
 
-	public var innerBarMaxWidth(get, never):Float;
-	public var innerBarHeight(get, never):Float;
-	public var outerWidth(get, never):Float;
-	public var outerHeight(get, never):Float;
-	public var color(default, set):UInt;
-	public var defaultColor(default, null):UInt;
+	public var innerBarMaxWidth(get, never) : Float;
+	public var innerBarHeight(get, never) : Float;
+	public var outerWidth(get, never) : Float;
+	public var outerHeight(get, never) : Float;
+	public var color(default, set) : UInt;
+	public var defaultColor(default, null) : UInt;
 
-	var padding:Int;
-	var oldBarSpeed:Float;
+	var padding : Int;
+	var oldBarSpeed : Float;
 
-	var blinkColor:h3d.Vector;
-	var gradTg:Null<h2d.TileGroup>;
+	var blinkColor : h3d.Vector;
+	var gradTg : Null<h2d.TileGroup>;
 
-	var curValue:Float;
-	var curMax:Float;
+	var curValue : Float;
+	var curMax : Float;
 
-	public function new(wid:Int, hei:Int, c:UInt, ?p:h2d.Object) {
+	public function new(wid : Int, hei : Int, c : UInt, ?p : h2d.Object) {
 		super(p);
 
 		curValue = 0;
@@ -38,7 +38,7 @@ class Bar extends h2d.Object {
 		defaultColor = color = c;
 	}
 
-	public function enableOldValue(oldBarColor:UInt, speed = 1.0) {
+	public function enableOldValue(oldBarColor : UInt, speed = 1.0) {
 		if (oldBar != null)
 			oldBar.remove();
 		oldBar = new h2d.ScaleGrid(h2d.Tile.fromColor(oldBarColor, 3, 3), 1, 1);
@@ -50,7 +50,7 @@ class Bar extends h2d.Object {
 		oldBarSpeed = speed;
 	}
 
-	public function setGraduationPx(step:Int, ?alpha = 0.5) {
+	public function setGraduationPx(step : Int, ?alpha = 0.5) {
 		if (step <= 1)
 			throw "Invalid bar graduation " + step;
 
@@ -69,7 +69,7 @@ class Bar extends h2d.Object {
 		}
 	}
 
-	public function addGraduation(xRatio:Float, c:UInt, ?alpha = 1.0) {
+	public function addGraduation(xRatio : Float, c : UInt, ?alpha = 1.0) {
 		if (gradTg == null) {
 			gradTg = new h2d.TileGroup(Assets.tiles.tile, this);
 			gradTg.colorAdd = blinkColor;
@@ -96,7 +96,7 @@ class Bar extends h2d.Object {
 	inline function get_outerHeight()
 		return bg.height;
 
-	public function setSize(wid:Int, hei:Int, pad:Int) {
+	public function setSize(wid : Int, hei : Int, pad : Int) {
 		padding = pad;
 
 		bar.setPosition(padding, padding);
@@ -112,7 +112,7 @@ class Bar extends h2d.Object {
 		renderBar();
 	}
 
-	public function set(v:Float, max:Float) {
+	public function set(v : Float, max : Float) {
 		var oldWidth = bar.width;
 		curValue = v;
 		curMax = max;
@@ -133,12 +133,12 @@ class Bar extends h2d.Object {
 			oldBar.width = 0;
 	}
 
-	public function blink(?c:UInt, ?a = 1.0) {
+	public function blink(?c : UInt, ?a = 1.0) {
 		blinkColor.setColor(Color.addAlphaF(c == null ? color : c, a));
 		cd.setS("blinkMaintain", 0.15 * 1 / oldBarSpeed);
 	}
 
-	override function sync(ctx:h2d.RenderContext) {
+	override function sync(ctx : h2d.RenderContext) {
 		var tmod = Game.ME.tmod;
 		cd.update(tmod);
 

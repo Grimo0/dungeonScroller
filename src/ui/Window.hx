@@ -1,7 +1,7 @@
 package ui;
 
 class Window extends dn.Process {
-	public var win:h2d.Flow;
+	public var win : h2d.Flow;
 
 	public function new() {
 		super(Game.ME);
@@ -23,7 +23,7 @@ class Window extends dn.Process {
 		win.removeChildren();
 	}
 
-	public inline function add(e:h2d.Flow) {
+	public inline function add(e : h2d.Flow) {
 		win.addChild(e);
 		onResize();
 	}

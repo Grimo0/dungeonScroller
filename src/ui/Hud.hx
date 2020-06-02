@@ -1,22 +1,22 @@
 package ui;
 
 class Hud extends dn.Process {
-	public var game(get, never):Game;
+	public var game(get, never) : Game;
 
 	inline function get_game()
 		return Game.ME;
 
-	public var fx(get, never):Fx;
+	public var fx(get, never) : Fx;
 
 	inline function get_fx()
 		return Game.ME.fx;
 
-	public var level(get, never):Level;
+	public var level(get, never) : Level;
 
 	inline function get_level()
 		return Game.ME.level;
 
-	var flow:h2d.Flow;
+	var flow : h2d.Flow;
 	var invalidated = true;
 
 	public function new() {

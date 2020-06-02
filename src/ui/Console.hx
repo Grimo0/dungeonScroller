@@ -1,13 +1,13 @@
 package ui;
 
 class Console extends h2d.Console {
-	public static var ME:Console;
+	public static var ME : Console;
 
 	#if debug
-	var flags:Map<String, Bool>;
+	var flags : Map<String, Bool>;
 	#end
 
-	public function new(f:h2d.Font, p:h2d.Object) {
+	public function new(f : h2d.Font, p : h2d.Object) {
 		super(f, p);
 
 		scale(2); // TODO smarter scaling for 4k screens
@@ -20,11 +20,11 @@ class Console extends h2d.Console {
 		// Debug flags
 		#if debug
 		flags = new Map();
-		this.addCommand("set", [{name: "k", t: AString}], function(k:String) {
+		this.addCommand("set", [{name: "k", t: AString}], function(k : String) {
 			setFlag(k, true);
 			log("+ " + k.toLowerCase(), 0x80FF00);
 		});
-		this.addCommand("unset", [{name: "k", t: AString, opt: true}], function(?k:String) {
+		this.addCommand("unset", [{name: "k", t: AString, opt: true}], function(?k : String) {
 			if (k == null) {
 				log("Reset all.", 0xFF0000);
 				for (k in flags.keys())
@@ -43,18 +43,18 @@ class Console extends h2d.Console {
 		#end
 	}
 
-	override function handleCommand(command:String) {
+	override function handleCommand(command : String) {
 		var flagReg = ~/[\/ \t]*\+[ \t]*([\w]+)/g; // cleanup missing spaces
 		super.handleCommand(flagReg.replace(command, "/+ $1"));
 	}
 
-	public function error(msg:Dynamic) {
+	public function error(msg : Dynamic) {
 		log("[ERROR] " + Std.string(msg), 0xff0000);
 		h2d.Console.HIDE_LOG_TIMEOUT = Const.INFINITE;
 	}
 
 	#if debug
-	public function setFlag(k:String, v) {
+	public function setFlag(k : String, v) {
 		k = k.toLowerCase();
 		var hadBefore = hasFlag(k);
 
@@ -68,12 +68,12 @@ class Console extends h2d.Console {
 		return v;
 	}
 
-	public function hasFlag(k:String)
+	public function hasFlag(k : String)
 		return flags.get(k.toLowerCase()) == true;
 	#else
-	public function hasFlag(k:String)
+	public function hasFlag(k : String)
 		return false;
 	#end
 
-	public function onFlagChange(k:String, v:Bool) {}
+	public function onFlagChange(k : String, v : Bool) {}
 }

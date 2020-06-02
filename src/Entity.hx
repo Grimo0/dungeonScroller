@@ -1,37 +1,37 @@
 class Entity {
-	public static var ALL:Array<Entity> = [];
-	public static var GC:Array<Entity> = [];
+	public static var ALL : Array<Entity> = [];
+	public static var GC : Array<Entity> = [];
 
 	// Shorthands properties
-	public var game(get, never):Game;
+	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
-	public var fx(get, never):Fx;
+	public var fx(get, never) : Fx;
 	inline function get_fx() return game.fx;
-	public var level(get, never):Level;
+	public var level(get, never) : Level;
 	inline function get_level() return game.level;
-	public var ftime(get, never):Float;
+	public var ftime(get, never) : Float;
 	inline function get_ftime() return game.ftime;
-	public var utmod(get, never):Float;
+	public var utmod(get, never) : Float;
 	inline function get_utmod() return game.utmod;
-	public var tmod(get, never):Float;
+	public var tmod(get, never) : Float;
 	inline function get_tmod() return game.tmod;
-	public var hud(get, never):ui.Hud;
+	public var hud(get, never) : ui.Hud;
 	inline function get_hud() return game.hud;
 
 	// Main properties
-	public var uid:Int;
+	public var uid : Int;
 
 	public var destroyed(default, null) = false;
 
-	public var cd:dn.Cooldown;
-	public var ucd:dn.Cooldown;
+	public var cd : dn.Cooldown;
+	public var ucd : dn.Cooldown;
 
 	// Base coordinates
 	public var cx = 0;
 	public var cy = 0;
 	public var xr = 0.5;
 	public var yr = 1.0;
-	public var hei(default, set):Float = Const.GRID;
+	public var hei(default, set) : Float = Const.GRID;
 	inline function set_hei(v) {
 		invalidateDebugBounds = true;
 		return hei = v;
@@ -48,9 +48,9 @@ class Entity {
 	public var dy = 0.;
 	public var bdx = 0.;
 	public var bdy = 0.;
-	public var dxTotal(get, never):Float;
+	public var dxTotal(get, never) : Float;
 	inline function get_dxTotal() return dx + bdx;
-	public var dyTotal(get, never):Float;
+	public var dyTotal(get, never) : Float;
 	inline function get_dyTotal() return dy + bdy;
 
 	public var frictX = 0.82;
@@ -63,48 +63,48 @@ class Entity {
 	}
 
 	// Display
-	public var spr:HSprite;
-	public var baseColor:h3d.Vector;
-	public var blinkColor:h3d.Vector;
-	public var colorMatrix:h3d.Matrix;
+	public var spr : HSprite;
+	public var baseColor : h3d.Vector;
+	public var blinkColor : h3d.Vector;
+	public var colorMatrix : h3d.Matrix;
 	public var sprScaleX = 1.0;
 	public var sprScaleY = 1.0;
 	public var sprSquashX = 1.0;
 	public var sprSquashY = 1.0;
 	public var visible = true;
 
-	public var footX(get, never):Float;
+	public var footX(get, never) : Float;
 	inline function get_footX() return (cx + xr) * Const.GRID;
-	public var footY(get, never):Float;
+	public var footY(get, never) : Float;
 	inline function get_footY() return (cy + yr) * Const.GRID;
-	public var headX(get, never):Float;
+	public var headX(get, never) : Float;
 	inline function get_headX() return footX;
-	public var headY(get, never):Float;
+	public var headY(get, never) : Float;
 	inline function get_headY() return footY - hei;
-	public var centerX(get, never):Float;
+	public var centerX(get, never) : Float;
 	inline function get_centerX() return footX;
-	public var centerY(get, never):Float;
+	public var centerY(get, never) : Float;
 	inline function get_centerY() return footY - hei * 0.5;
-	public var prevFrameFootX:Float = -Const.INFINITE;
-	public var prevFrameFootY:Float = -Const.INFINITE;
+	public var prevFrameFootX : Float = -Const.INFINITE;
+	public var prevFrameFootY : Float = -Const.INFINITE;
 
-	public var life(default, null):Int;
-	public var maxLife(default, null):Int;
-	public var lastDmgSource(default, null):Null<Entity>;
+	public var life(default, null) : Int;
+	public var maxLife(default, null) : Int;
+	public var lastDmgSource(default, null) : Null<Entity>;
 
-	public var lastHitDirFromSource(get, never):Int;
+	public var lastHitDirFromSource(get, never) : Int;
 	inline function get_lastHitDirFromSource() return lastDmgSource == null ? -dir : -dirTo(lastDmgSource);
 
-	public var lastHitDirToSource(get, never):Int;
+	public var lastHitDirToSource(get, never) : Int;
 	inline function get_lastHitDirToSource() return lastDmgSource == null ? dir : dirTo(lastDmgSource);
 
-	var debugLabel:Null<h2d.Text>;
-	var debugBounds:Null<h2d.Graphics>;
+	var debugLabel : Null<h2d.Text>;
+	var debugBounds : Null<h2d.Graphics>;
 	var invalidateDebugBounds = false;
 
-	var actions:Array<{id:String, cb:Void->Void, t:Float}> = [];
+	var actions : Array<{id : String, cb : Void->Void, t : Float}> = [];
 
-	public function new(x:Int, y:Int) {
+	public function new(x : Int, y : Int) {
 		uid = Const.NEXT_UNIQ;
 		ALL.push(this);
 
@@ -128,7 +128,7 @@ class Entity {
 		life = maxLife = v;
 	}
 
-	public function hit(dmg:Int, from:Null<Entity>) {
+	public function hit(dmg : Int, from : Null<Entity>) {
 		if (!isAlive() || dmg <= 0)
 			return;
 
@@ -139,12 +139,12 @@ class Entity {
 			onDie();
 	}
 
-	public function kill(by:Null<Entity>) {
+	public function kill(by : Null<Entity>) {
 		if (isAlive())
 			hit(life, by);
 	}
 
-	function onDamage(dmg:Int, from:Entity) {}
+	function onDamage(dmg : Int, from : Entity) {}
 
 	function onDie() {
 		destroy();
@@ -154,7 +154,7 @@ class Entity {
 		return !destroyed;
 	}
 
-	public function setPosCase(x:Int, y:Int) {
+	public function setPosCase(x : Int, y : Int) {
 		cx = x;
 		cy = y;
 		xr = 0.5;
@@ -162,7 +162,7 @@ class Entity {
 		onPosManuallyChanged();
 	}
 
-	public function setPosPixel(x:Float, y:Float) {
+	public function setPosPixel(x : Float, y : Float) {
 		cx = Std.int(x / Const.GRID);
 		cy = Std.int(y / Const.GRID);
 		xr = (x - cx * Const.GRID) / Const.GRID;
@@ -170,7 +170,7 @@ class Entity {
 		onPosManuallyChanged();
 	}
 
-	public function setPosUsingOgmoEnt(oe:ogmo.Entity) {
+	public function setPosUsingOgmoEnt(oe : ogmo.Entity) {
 		cx = Std.int(oe.x / Const.GRID);
 		cy = Std.int(oe.y / Const.GRID);
 		xr = (oe.x - cx * Const.GRID) / Const.GRID;
@@ -185,7 +185,7 @@ class Entity {
 		}
 	}
 
-	public function bump(x:Float, y:Float) {
+	public function bump(x : Float, y : Float) {
 		bdx += x;
 		bdy += y;
 	}
@@ -195,26 +195,26 @@ class Entity {
 		dy = bdy = 0;
 	}
 
-	public function is<T:Entity>(c:Class<T>) return Std.is(this, c);
+	public function is<T : Entity>(c : Class<T>) return Std.is(this, c);
 
-	public function as<T:Entity>(c:Class<T>):T return Std.downcast(this, c);
+	public function as<T : Entity>(c : Class<T>) : T return Std.downcast(this, c);
 
-	public inline function dirTo(e:Entity) return e.centerX < centerX ? -1 : 1;
+	public inline function dirTo(e : Entity) return e.centerX < centerX ? -1 : 1;
 
 	public inline function dirToAng() return dir == 1 ? 0. : M.PI;
 
 	public inline function getMoveAng() return Math.atan2(dyTotal, dxTotal);
 
-	public inline function distCase(e:Entity) 
+	public inline function distCase(e : Entity)
 		return M.dist(cx + xr, cy + yr, e.cx + e.xr, e.cy + e.yr);
 
-	public inline function distCaseFree(tcx:Int, tcy:Int, ?txr = 0.5, ?tyr = 0.5)
+	public inline function distCaseFree(tcx : Int, tcy : Int, ?txr = 0.5, ?tyr = 0.5)
 		return M.dist(cx + xr, cy + yr, tcx + txr, tcy + tyr);
 
-	public inline function distPx(e:Entity)
+	public inline function distPx(e : Entity)
 		return M.dist(footX, footY, e.footX, e.footY);
 
-	public inline function distPxFree(x:Float, y:Float)
+	public inline function distPxFree(x : Float, y : Float)
 		return M.dist(footX, footY, x, y);
 
 	public inline function destroy() {
@@ -248,7 +248,7 @@ class Entity {
 		cd = null;
 	}
 
-	public inline function debug(?v:Dynamic, ?c = 0xffffff) {
+	public inline function debug(?v : Dynamic, ?c = 0xffffff) {
 		#if debug
 		if (v == null && debugLabel != null) {
 			debugLabel.remove();
@@ -307,7 +307,7 @@ class Entity {
 		debugBounds.drawCircle(0, headY - footY, 3);
 	}
 
-	function chargeAction(id:String, sec:Float, cb:Void->Void) {
+	function chargeAction(id : String, sec : Float, cb : Void->Void) {
 		if (isChargingAction(id))
 			cancelAction(id);
 		if (sec <= 0)
@@ -316,7 +316,7 @@ class Entity {
 			actions.push({id: id, cb: cb, t: sec});
 	}
 
-	public function isChargingAction(?id:String) {
+	public function isChargingAction(?id : String) {
 		if (id == null)
 			return actions.length > 0;
 
@@ -327,7 +327,7 @@ class Entity {
 		return false;
 	}
 
-	public function cancelAction(?id:String) {
+	public function cancelAction(?id : String) {
 		if (id == null)
 			actions = [];
 		else {
@@ -355,17 +355,17 @@ class Entity {
 		}
 	}
 
-	public function blink(c:UInt) {
+	public function blink(c : UInt) {
 		blinkColor.setColor(c);
 		cd.setS("keepBlink", 0.06);
 	}
 
-	public function setSquashX(v:Float) {
+	public function setSquashX(v : Float) {
 		sprSquashX = v;
 		sprSquashY = 2 - v;
 	}
 
-	public function setSquashY(v:Float) {
+	public function setSquashY(v : Float) {
 		sprSquashX = 2 - v;
 		sprSquashY = v;
 	}

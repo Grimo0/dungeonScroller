@@ -10,5 +10,8 @@
 	"sameLine": {
 		"anonFunctionBody": "keep",
 		"functionBody": "keep"
+	},
+	"whitespace": {
+		"typeHintColonPolicy": "around"
 	}
 }

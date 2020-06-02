@@ -1,5 +1,5 @@
 class Boot extends hxd.App {
-	public static var ME:Boot;
+	public static var ME : Boot;
 
 	// Boot
 	static function main() {
@@ -20,7 +20,7 @@ class Boot extends hxd.App {
 
 	var speed = 1.0;
 
-	override function update(deltaTime:Float) {
+	override function update(deltaTime : Float) {
 		super.update(deltaTime);
 
 		// Bullet time

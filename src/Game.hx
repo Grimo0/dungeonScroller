@@ -2,17 +2,17 @@ import dn.Process;
 import hxd.Key;
 
 class Game extends Process {
-	public static var ME:Game;
+	public static var ME : Game;
 
-	public var ca:dn.heaps.Controller.ControllerAccess;
-	public var fx:Fx;
-	public var camera:Camera;
-	public var scroller:h2d.Layers;
-	public var level:Level;
-	public var hud:ui.Hud;
+	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var fx : Fx;
+	public var camera : Camera;
+	public var scroller : h2d.Layers;
+	public var level : Level;
+	public var hud : ui.Hud;
 
 	var curGameSpeed = 1.0;
-	var slowMos:Map<String, {id:String, t:Float, f:Float}> = new Map();
+	var slowMos : Map<String, {id : String, t : Float, f : Float}> = new Map();
 
 	public function new() {
 		super(Main.ME);
@@ -60,7 +60,7 @@ class Game extends Process {
 		gc();
 	}
 
-	public function addSlowMo(id:String, sec:Float, speedFactor = 0.3) {
+	public function addSlowMo(id : String, sec : Float, speedFactor = 0.3) {
 		if (slowMos.exists(id)) {
 			var s = slowMos.get(id);
 			s.f = speedFactor;

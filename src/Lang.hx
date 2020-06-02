@@ -4,9 +4,9 @@ class Lang {
 	static var _initDone = false;
 	static var DEFAULT = "en";
 	public static var CUR = "??";
-	public static var t:GetText;
+	public static var t : GetText;
 
-	public static function init(?lid:String) {
+	public static function init(?lid : String) {
 		if (_initDone)
 			return;
 
@@ -17,7 +17,7 @@ class Lang {
 		t.readMo(hxd.Res.load("lang/" + CUR + ".mo").entry.getBytes());
 	}
 
-	public static function untranslated(str:Dynamic):LocaleString {
+	public static function untranslated(str : Dynamic) : LocaleString {
 		init();
 		return t.untranslated(str);
 	}

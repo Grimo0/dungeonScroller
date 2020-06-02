@@ -2,12 +2,12 @@ import Data;
 import hxd.Key;
 
 class Main extends dn.Process {
-	public static var ME:Main;
+	public static var ME : Main;
 
-	public var controller:dn.heaps.Controller;
-	public var ca:dn.heaps.Controller.ControllerAccess;
+	public var controller : dn.heaps.Controller;
+	public var ca : dn.heaps.Controller.ControllerAccess;
 
-	public function new(s:h2d.Scene) {
+	public function new(s : h2d.Scene) {
 		super();
 		ME = this;
 

@@ -1,18 +1,18 @@
 class Level extends dn.Process {
-	public var game(get, never):Game;
+	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
 
-	public var fx(get, never):Fx;
+	public var fx(get, never) : Fx;
 	inline function get_fx() return game.fx;
 
-	public var wid(get, never):Int;
+	public var wid(get, never) : Int;
 	inline function get_wid() return data.getLayerByName("collisions").cWid;
 
-	public var hei(get, never):Int;
+	public var hei(get, never) : Int;
 	inline function get_hei() return data.getLayerByName("collisions").cHei;
 
-	var ogmo:ogmo.Project;
-	var data:ogmo.Level;
+	var ogmo : ogmo.Project;
+	var data : ogmo.Level;
 
 	var invalidated = true;
 
@@ -30,15 +30,15 @@ class Level extends dn.Process {
 	public inline function coordId(cx, cy)
 		return cx + cy * wid;
 
-	public inline function getOgmoEntity(id:String):Null<ogmo.Entity> {
+	public inline function getOgmoEntity(id : String) : Null<ogmo.Entity> {
 		return data.getLayerByName("entities").getEntity(id);
 	}
 
-	public inline function getOgmoEntities(id:String):Array<ogmo.Entity> {
+	public inline function getOgmoEntities(id : String) : Array<ogmo.Entity> {
 		return data.getLayerByName("entities").getEntities(id);
 	}
 
-	public inline function hasCollision(cx, cy):Bool {
+	public inline function hasCollision(cx, cy) : Bool {
 		return !isValid(cx, cy) ? true : data.getLayerByName("collisions").getIntGrid(cx, cy) == 1;
 	}
 

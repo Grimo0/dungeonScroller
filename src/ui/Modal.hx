@@ -1,12 +1,12 @@
 package ui;
 
 class Modal extends ui.Window {
-	public static var ALL:Array<Modal> = [];
+	public static var ALL : Array<Modal> = [];
 	static var COUNT = 0;
 
-	var ca:dn.heaps.Controller.ControllerAccess;
-	var mask:h2d.Bitmap;
-	var modalIdx:Int;
+	var ca : dn.heaps.Controller.ControllerAccess;
+	var mask : h2d.Bitmap;
+	var modalIdx : Int;
 
 	public function new() {
 		super();
