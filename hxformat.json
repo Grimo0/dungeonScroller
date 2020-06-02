@@ -1,2 +1,14 @@
 {
+	"emptyLines": {
+		"classEmptyLines": {
+			"existingBetweenFields": "keep",
+			"afterVars": 0,
+			"afterStaticVars": 2
+		},
+		"maxAnywhereInFile": 4
+	},
+	"sameLine": {
+		"anonFunctionBody": "keep",
+		"functionBody": "keep"
+	}
 }
