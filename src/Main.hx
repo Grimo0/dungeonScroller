@@ -20,32 +20,10 @@ class Main extends dn.Process {
 		engine.fullScreen = true;
 		#end
 
-		// Resources
-		#if (hl && debug)
-		hxd.Res.initLocal();
-		#else
-		hxd.Res.initEmbed();
-		#end
-
-		// Hot reloading
-		#if debug
-		hxd.res.Resource.LIVE_UPDATE = true;
-		hxd.Res.data.watch(function() {
-			delayer.cancelById("cdb");
-
-			delayer.addS("cdb", function() {
-				Data.load(hxd.Res.data.entry.getBytes().toString());
-				if (Game.ME != null)
-					Game.ME.onCdbReload();
-			}, 0.2);
-		});
-		#end
-
 		// Assets & data init
 		Assets.init();
 		new ui.Console(Assets.fontTiny, s);
 		Lang.init("en");
-		Data.load(hxd.Res.data.entry.getText());
 
 		// Game controller
 		controller = new dn.heaps.Controller(s);
@@ -58,8 +36,11 @@ class Main extends dn.Process {
 		controller.bind(SELECT, Key.R);
 		controller.bind(START, Key.N);
 
-		// Start
+		// Focus helper (process that suspend the game when the focus is lost)
+		// TODO: Implement our own Focus Helper
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
+
+		// Start
 		delayer.addF(startGame, 1);
 	}
 

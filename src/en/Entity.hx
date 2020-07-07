@@ -1,3 +1,5 @@
+package en;
+
 class Entity {
 	public static var ALL : Array<Entity> = [];
 	public static var GC : Array<Entity> = [];
@@ -6,17 +8,17 @@ class Entity {
 	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
 	public var fx(get, never) : Fx;
-	inline function get_fx() return game.fx;
+	inline function get_fx() return Game.ME.fx;
 	public var level(get, never) : Level;
-	inline function get_level() return game.level;
+	inline function get_level() return Game.ME.level;
 	public var ftime(get, never) : Float;
-	inline function get_ftime() return game.ftime;
+	inline function get_ftime() return Game.ME.ftime;
 	public var utmod(get, never) : Float;
-	inline function get_utmod() return game.utmod;
+	inline function get_utmod() return Game.ME.utmod;
 	public var tmod(get, never) : Float;
-	inline function get_tmod() return game.tmod;
+	inline function get_tmod() return Game.ME.tmod;
 	public var hud(get, never) : ui.Hud;
-	inline function get_hud() return game.hud;
+	inline function get_hud() return Game.ME.hud;
 
 	// Main properties
 	public var uid : Int;
@@ -36,7 +38,6 @@ class Entity {
 		invalidateDebugBounds = true;
 		return hei = v;
 	}
-
 	public var radius(default, set) = Const.GRID * 0.5;
 	inline function set_radius(v) {
 		invalidateDebugBounds = true;
@@ -62,17 +63,6 @@ class Entity {
 		return dir = v > 0 ? 1 : v < 0 ? -1 : dir;
 	}
 
-	// Display
-	public var spr : HSprite;
-	public var baseColor : h3d.Vector;
-	public var blinkColor : h3d.Vector;
-	public var colorMatrix : h3d.Matrix;
-	public var sprScaleX = 1.0;
-	public var sprScaleY = 1.0;
-	public var sprSquashX = 1.0;
-	public var sprSquashY = 1.0;
-	public var visible = true;
-
 	public var footX(get, never) : Float;
 	inline function get_footX() return (cx + xr) * Const.GRID;
 	public var footY(get, never) : Float;
@@ -88,29 +78,33 @@ class Entity {
 	public var prevFrameFootX : Float = -Const.INFINITE;
 	public var prevFrameFootY : Float = -Const.INFINITE;
 
-	public var life(default, null) : Int;
-	public var maxLife(default, null) : Int;
-	public var lastDmgSource(default, null) : Null<Entity>;
+	// Display
+	public var spr : HSprite;
+	public var baseColor : h3d.Vector;
+	public var blinkColor : h3d.Vector;
+	public var colorMatrix : h3d.Matrix;
+	public var sprScaleX = 1.0;
+	public var sprScaleY = 1.0;
+	public var sprSquashX = 1.0;
+	public var sprSquashY = 1.0;
+	public var visible = true;
 
-	public var lastHitDirFromSource(get, never) : Int;
-	inline function get_lastHitDirFromSource() return lastDmgSource == null ? -dir : -dirTo(lastDmgSource);
+	var actions : Array<{id : String, cb : Void->Void, t : Float}> = [];
 
-	public var lastHitDirToSource(get, never) : Int;
-	inline function get_lastHitDirToSource() return lastDmgSource == null ? dir : dirTo(lastDmgSource);
-
+	// Debug
 	var debugLabel : Null<h2d.Text>;
 	var debugBounds : Null<h2d.Graphics>;
 	var invalidateDebugBounds = false;
 
-	var actions : Array<{id : String, cb : Void->Void, t : Float}> = [];
-
-	public function new(x : Int, y : Int) {
+	public function new(?x : Int, ?y : Int) {
 		uid = Const.NEXT_UNIQ;
 		ALL.push(this);
 
 		cd = new dn.Cooldown(Const.FPS);
 		ucd = new dn.Cooldown(Const.FPS);
-		setPosCase(x, y);
+
+		if (x != null && y != null)
+			setPosCell(x, y);
 
 		spr = new HSprite(Assets.tiles);
 		Game.ME.scroller.add(spr, Const.DP_MAIN);
@@ -124,37 +118,7 @@ class Entity {
 			enableBounds();
 	}
 
-	public function initLife(v) {
-		life = maxLife = v;
-	}
-
-	public function hit(dmg : Int, from : Null<Entity>) {
-		if (!isAlive() || dmg <= 0)
-			return;
-
-		life = M.iclamp(life - dmg, 0, maxLife);
-		lastDmgSource = from;
-		onDamage(dmg, from);
-		if (life <= 0)
-			onDie();
-	}
-
-	public function kill(by : Null<Entity>) {
-		if (isAlive())
-			hit(life, by);
-	}
-
-	function onDamage(dmg : Int, from : Entity) {}
-
-	function onDie() {
-		destroy();
-	}
-
-	public inline function isAlive() {
-		return !destroyed;
-	}
-
-	public function setPosCase(x : Int, y : Int) {
+	public function setPosCell(x : Int, y : Int) {
 		cx = x;
 		cy = y;
 		xr = 0.5;
@@ -170,6 +134,7 @@ class Entity {
 		onPosManuallyChanged();
 	}
 
+	#if heapsOgmo
 	public function setPosUsingOgmoEnt(oe : ogmo.Entity) {
 		cx = Std.int(oe.x / Const.GRID);
 		cy = Std.int(oe.y / Const.GRID);
@@ -177,6 +142,7 @@ class Entity {
 		yr = (oe.y - cy * Const.GRID) / Const.GRID;
 		onPosManuallyChanged();
 	}
+	#end
 
 	function onPosManuallyChanged() {
 		if (M.dist(footX, footY, prevFrameFootX, prevFrameFootY) > Const.GRID * 2) {
@@ -205,10 +171,10 @@ class Entity {
 
 	public inline function getMoveAng() return Math.atan2(dyTotal, dxTotal);
 
-	public inline function distCase(e : Entity)
+	public inline function distEntity(e : Entity)
 		return M.dist(cx + xr, cy + yr, e.cx + e.xr, e.cy + e.yr);
 
-	public inline function distCaseFree(tcx : Int, tcy : Int, ?txr = 0.5, ?tyr = 0.5)
+	public inline function distCell(tcx : Int, tcy : Int, ?txr = 0.5, ?tyr = 0.5)
 		return M.dist(cx + xr, cy + yr, tcx + txr, tcy + tyr);
 
 	public inline function distPx(e : Entity)
@@ -348,7 +314,7 @@ class Entity {
 			a.t -= tmod / Const.FPS;
 			if (a.t <= 0) {
 				actions.splice(i, 1);
-				if (isAlive())
+				if (!destroyed)
 					a.cb();
 			} else
 				i++;

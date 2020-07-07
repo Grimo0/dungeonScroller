@@ -6,22 +6,14 @@ class Level extends dn.Process {
 	inline function get_fx() return game.fx;
 
 	public var wid(get, never) : Int;
-	inline function get_wid() return data.getLayerByName("collisions").cWid;
+	inline function get_wid() return 10; // FIXME: level cells per row
 
 	public var hei(get, never) : Int;
-	inline function get_hei() return data.getLayerByName("collisions").cHei;
-
-	var ogmo : ogmo.Project;
-	var data : ogmo.Level;
-
-	var invalidated = true;
+	inline function get_hei() return 10; // FIXME: level cells per column
 
 	public function new() {
 		super(Game.ME);
 		createRootInLayers(Game.ME.scroller, Const.DP_BG);
-
-		ogmo = new ogmo.Project(hxd.Res.ld.world, false);
-		data = ogmo.getLevelByName("baseLevel");
 	}
 
 	public inline function isValid(cx, cy)
@@ -30,40 +22,15 @@ class Level extends dn.Process {
 	public inline function coordId(cx, cy)
 		return cx + cy * wid;
 
-	public inline function getOgmoEntity(id : String) : Null<ogmo.Entity> {
-		return data.getLayerByName("entities").getEntity(id);
-	}
-
-	public inline function getOgmoEntities(id : String) : Array<ogmo.Entity> {
-		return data.getLayerByName("entities").getEntities(id);
-	}
-
-	public inline function hasCollision(cx, cy) : Bool {
-		return !isValid(cx, cy) ? true : data.getLayerByName("collisions").getIntGrid(cx, cy) == 1;
-	}
+	public inline function hasCollision(cx, cy) : Bool
+		return false; // TODO: collision with entities and obstacles
 
 	public function render() {
-		// Debug level render
-		root.removeChildren();
-		for (cx in 0...wid)
-			for (cy in 0...hei) {
-				var g = new h2d.Graphics(root);
-				g.beginFill(Color.randomColor(rnd(0, 1), 0.5, 0.4), 1);
-				g.drawRect(cx * Const.GRID, cy * Const.GRID, Const.GRID, Const.GRID);
-
-				if (hasCollision(cx, cy)) {
-					g.beginFill(0xffffff);
-					g.drawRect(cx * Const.GRID, cy * Const.GRID, Const.GRID, Const.GRID);
-				}
-			}
 	}
 
 	override function postUpdate() {
 		super.postUpdate();
 
-		if (invalidated) {
-			invalidated = false;
-			render();
-		}
+		render();
 	}
 }

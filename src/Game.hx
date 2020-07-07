@@ -1,3 +1,4 @@
+import en.Entity;
 import dn.Process;
 import hxd.Key;
 
@@ -42,15 +43,6 @@ class Game extends Process {
 		scroller.setScale(Const.SCALE);
 	}
 
-	function gc() {
-		if (Entity.GC == null || Entity.GC.length == 0)
-			return;
-
-		for (e in Entity.GC)
-			e.dispose();
-		Entity.GC = [];
-	}
-
 	override function onDispose() {
 		super.onDispose();
 
@@ -58,6 +50,15 @@ class Game extends Process {
 		for (e in Entity.ALL)
 			e.destroy();
 		gc();
+	}
+
+	function gc() {
+		if (Entity.GC == null || Entity.GC.length == 0)
+			return;
+
+		for (e in Entity.GC)
+			e.dispose();
+		Entity.GC = [];
 	}
 
 	public function addSlowMo(id : String, sec : Float, speedFactor = 0.3) {
@@ -99,23 +100,6 @@ class Game extends Process {
 				e.preUpdate();
 	}
 
-	override function postUpdate() {
-		super.postUpdate();
-
-		for (e in Entity.ALL)
-			if (!e.destroyed)
-				e.postUpdate();
-		for (e in Entity.ALL)
-			if (!e.destroyed)
-				e.finalUpdate();
-		gc();
-
-		// Update slow-motions
-		updateSlowMos();
-		setTimeMultiplier((0.2 + 0.8 * curGameSpeed) * (ucd.has("stopFrame") ? 0.3 : 1));
-		Assets.tiles.tmod = tmod;
-	}
-
 	override function fixedUpdate() {
 		super.fixedUpdate();
 
@@ -146,5 +130,22 @@ class Game extends Process {
 			if (ca.selectPressed())
 				Main.ME.startGame();
 		}
+	}
+
+	override function postUpdate() {
+		super.postUpdate();
+
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.postUpdate();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.finalUpdate();
+		gc();
+
+		// Update slow-motions
+		updateSlowMos();
+		setTimeMultiplier((0.2 + 0.8 * curGameSpeed) * (ucd.has("stopFrame") ? 0.3 : 1));
+		Assets.tiles.tmod = tmod;
 	}
 }

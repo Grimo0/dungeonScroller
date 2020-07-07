@@ -1,3 +1,4 @@
+import en.Entity;
 import h2d.Sprite;
 import dn.heaps.HParticle;
 import dn.Tweenie;
@@ -7,7 +8,7 @@ class Fx extends dn.Process {
 	inline function get_game() return Game.ME;
 
 	var level(get, never) : Level;
-	inline function get_level() return game.level;
+	inline function get_level() return Game.ME.level;
 
 	public var pool : ParticlePool;
 
@@ -30,14 +31,14 @@ class Fx extends dn.Process {
 		game.scroller.add(bgNormalSb, Const.DP_FX_BG);
 		bgNormalSb.hasRotationScale = true;
 
-		topNormalSb = new h2d.SpriteBatch(Assets.tiles.tile);
-		game.scroller.add(topNormalSb, Const.DP_FX_FRONT);
-		topNormalSb.hasRotationScale = true;
-
 		topAddSb = new h2d.SpriteBatch(Assets.tiles.tile);
 		game.scroller.add(topAddSb, Const.DP_FX_FRONT);
 		topAddSb.blendMode = Add;
 		topAddSb.hasRotationScale = true;
+
+		topNormalSb = new h2d.SpriteBatch(Assets.tiles.tile);
+		game.scroller.add(topNormalSb, Const.DP_FX_FRONT);
+		topNormalSb.hasRotationScale = true;
 	}
 
 	override public function onDispose() {
@@ -83,11 +84,11 @@ class Fx extends dn.Process {
 		if (e == null)
 			return;
 
-		markerCase(e.cx, e.cy, short ? 0.03 : 3, c);
+		markerCell(e.cx, e.cy, short ? 0.03 : 3, c);
 		#end
 	}
 
-	public function markerCase(cx : Int, cy : Int, ?sec = 3.0, ?c = 0xFF00FF) {
+	public function markerCell(cx : Int, cy : Int, ?sec = 3.0, ?c = 0xFF00FF) {
 		#if debug
 		var p = allocTopAdd(getTile("fxCircle"), (cx + 0.5) * Const.GRID, (cy + 0.5) * Const.GRID);
 		p.setFadeS(1, 0, 0.06);

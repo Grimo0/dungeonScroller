@@ -2,8 +2,5 @@
 -lib castle
 -lib heaps
 -lib deepnightLibs
--lib heapsOgmo
 -main Boot
 -dce full
-# -D analyzer-optimize
-# -D warn-var-shadowing

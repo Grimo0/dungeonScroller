@@ -6,6 +6,8 @@ class Boot extends hxd.App {
 		new Boot();
 	}
 
+	var speed = 1.0;
+
 	// Engine ready
 	override function init() {
 		ME = this;
@@ -18,21 +20,10 @@ class Boot extends hxd.App {
 		dn.Process.resizeAll();
 	}
 
-	var speed = 1.0;
-
 	override function update(deltaTime : Float) {
 		super.update(deltaTime);
 
-		// Bullet time
-		#if debug
-		if (hxd.Key.isPressed(hxd.Key.NUMPAD_SUB) || Main.ME.ca.dpadDownPressed())
-			speed = speed >= 1 ? 0.33 : 1;
-		#end
-
 		var tmod = hxd.Timer.tmod * speed;
-		#if debug
-		tmod *= hxd.Key.isDown(hxd.Key.NUMPAD_ADD) || Main.ME != null && Main.ME.ca.ltDown() ? 5 : 1;
-		#end
 		dn.heaps.Controller.beforeUpdate();
 		dn.Process.updateAll(tmod);
 	}

@@ -1,3 +1,5 @@
+import en.Entity;
+
 class Camera extends dn.Process {
 	public var target : Null<Entity>;
 	public var x : Float;
@@ -5,23 +7,19 @@ class Camera extends dn.Process {
 	public var dx : Float;
 	public var dy : Float;
 	public var wid(get, never) : Int;
+	function get_wid() return M.ceil(Game.ME.w() / Const.SCALE);
 	public var hei(get, never) : Int;
+	function get_hei() return M.ceil(Game.ME.h() / Const.SCALE);
 
 	var bumpOffX = 0.;
 	var bumpOffY = 0.;
+
+	var shakePower = 1.0;
 
 	public function new() {
 		super(Game.ME);
 		x = y = 0;
 		dx = dy = 0;
-	}
-
-	function get_wid() {
-		return M.ceil(Game.ME.w() / Const.SCALE);
-	}
-
-	function get_hei() {
-		return M.ceil(Game.ME.h() / Const.SCALE);
 	}
 
 	public function trackTarget(e : Entity, immediate : Bool) {
@@ -46,8 +44,6 @@ class Camera extends dn.Process {
 
 	public inline function scrollerToGlobalY(v : Float)
 		return v * Const.SCALE + Game.ME.scroller.y;
-
-	var shakePower = 1.0;
 
 	public function shakeS(t : Float, ?pow = 1.0) {
 		cd.setS("shaking", t, false);
