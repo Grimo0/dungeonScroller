@@ -21,25 +21,17 @@
 			"priority": -11
 		},
 		{
-			"text": "☕ Build JS",
-			"color": "yellow",
+			"text": "🧹 Format src",
+			"color": "white",
 			"commandType":"palette",
-			"command": "workbench.action.tasks.runTask|JS release",
+			"command": "workbench.action.tasks.runTask|Src Formatter",
 			"alignment": "right",
 			"skipTerminateQuickPick": false,
 			"priority": -20
 		},
 		{
-			"text": "Run JS",
-			"color": "yellow",
-			"command": "start js.html",
-			"alignment": "right",
-			"skipTerminateQuickPick": false,
-			"priority": -21
-		},
-		{
 			"text": "🅰️ Build POT",
-			"color": "white",
+			"color": "yellow",
 			"commandType":"palette",
 			"command": "workbench.action.tasks.runTask|Lang",
 			"alignment": "right",

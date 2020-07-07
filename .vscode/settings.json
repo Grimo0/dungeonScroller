@@ -1,7 +1,17 @@
 {
-    "workbench.colorCustomizations": {
-        "titleBar.inactiveBackground": "#494949",
-        "titleBar.activeBackground": "#6d6d6d",
-        "titleBar.activeForeground": "#ffffff"
-    }
+	"workbench.colorCustomizations": {
+		 "titleBar.inactiveBackground": "#494949",
+		 "titleBar.activeBackground": "#6d6d6d",
+		 "titleBar.activeForeground": "#ffffff"
+	},
+	"eslint.enable": true,
+	"spellright.language": [
+		"en"
+	],
+	"spellright.documentTypes": [
+		"markdown",
+		"latex",
+		"plaintext",
+		"javascript"
+	]
 }
