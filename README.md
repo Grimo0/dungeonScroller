@@ -1,9 +1,9 @@
 # About
 
-Base structure for my games forked from [](https://github.com/deepnight/gameBase).
-The language is **Haxe** ([](https://haxe.org)).
-Builds are done with **Hashlink** ([](https://hashlink.haxe.org)), a virtual machine, working on all platforms. 
-And using **Heaps** ([](https://heaps.io)), a 2D/3D Haxe library (ie. an Haxelib). All of those tools are free and open-source.
+Base structure for my games forked from (https://github.com/deepnight/gameBase).
+The language is **Haxe** (https://haxe.org).
+Builds are done with **Hashlink** (https://hashlink.haxe.org), a virtual machine, working on all platforms. 
+And using **Heaps** (https://heaps.io), a 2D/3D Haxe library (*ie.* an Haxelib). All of those tools are free and open-source.
 
 # Installation & usage
 
@@ -15,9 +15,7 @@ And using **Heaps** ([](https://heaps.io)), a 2D/3D Haxe library (ie. an Haxelib
 ## Tools and optionnal setup
 
 - Visual Studio Code Command bar (id: gsppvo.vscode-commandbar) is recommended.
-[[screens/commandBar.jpg|alt=commandbar]]
-
-  - // TODO: Add command bar screen
+![commandbar](screens/commandBar.jpg)
 
 ## Norms
 
