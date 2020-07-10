@@ -9,7 +9,7 @@ And using **Heaps** (https://heaps.io), a 2D/3D Haxe library (*ie.* an Haxelib).
 
 - First you can follow points 1 to 5 of this tutorial from *Sébastien Bénard* : https://deepnight.net/tutorial/a-quick-guide-to-installing-haxe/
 - Download it into your local repository or fork this project then clone yours 
-- Open the root folder with vscodex
+- Open the root folder with vscode
 - Press F1 then `Haxe: select configuration` and select hl.debug.hxml
 - Press F5 to launch the game in debug or use the command bar buttons (see below)
 
@@ -23,7 +23,7 @@ And using **Heaps** (https://heaps.io), a 2D/3D Haxe library (*ie.* an Haxelib).
 We are using the UpperCamelCase for file and class names. This means all worlds are next to each other without space and must start with an uppercase. `-` are allowed for different file versions (*eg.* Robot.png and Robot-Blue.png or Robot-Normal.png).
 Folders must be in lowerCamelCase (same but the first word has no starting uppercase) as well as variables and functions.
 
-# Common Questions
+# Questions & Ressources
 
 ## Exporting a new font
 

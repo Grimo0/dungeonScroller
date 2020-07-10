@@ -6,6 +6,7 @@ class Const {
 	public static var SCALE = 1.0; // ignored if auto-scaling
 	public static var UI_SCALE = 1.0;
 	public static var GRID = 16;
+	public static var MAX_CELLS_PER_WIDTH = 12;
 
 	static var _uniq = 0;
 	public static var NEXT_UNIQ(get, never) : Int;
