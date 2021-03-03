@@ -4,17 +4,22 @@ class Level extends dn.Process {
 	public var fx(get, never) : Fx;
 	inline function get_fx() return game.fx;
 
-	public var currLevel : Data.Levels; // FIXME: Replace with your data level type
+	public var currLevel(default, set) : LDtkMap.LDtkMap_Level; // FIXME: Replace with your data level type
+	public function set_currLevel(l : LDtkMap.LDtkMap_Level) {
+		currLevel = l;
+		initLevel();
+		return currLevel;
+	}
 
 	public var wid(get, never) : Int;
-	inline function get_wid() return currLevel.width;
+	inline function get_wid() return currLevel.pxWid;
 
 	public var hei(get, never) : Int;
-	inline function get_hei() return currLevel.height;
+	inline function get_hei() return currLevel.pxHei;
 
 	public function new() {
 		super(Game.ME);
-		createRootInLayers(Game.ME.scroller, Const.DP_BG);
+		createRootInLayers(Game.ME.scroller, Const.GAME_SCROLLER_BG);
 	}
 
 	public inline function isValid(cx, cy)
@@ -28,24 +33,20 @@ class Level extends dn.Process {
 
 	override function init() {
 		super.init();
-		
+
 		if (root != null)
 			initLevel();
 	}
 
-	public function setLevel(id : Data.LevelsKind) {
-		currLevel = Data.levels.get(id);
-		initLevel();
-	}
-
 	public function initLevel() {
-		var cdb = new h2d.CdbLevel(Data.levels, 0);
-		cdb.redraw();
-
-		// Add level layers to the root
-		for (layer in cdb.layers) {
-			root.addChild(layer.content);
+		// Get level background image
+		if (currLevel.hasBgImage()) {
+			var background = currLevel.getBgBitmap();
+			root.addChild(background);
 		}
+
+		// Render an auto-layer
+		// TODO add layer render root.addChild( level.l_Collisions.render() );
 
 		// Update camera zoom
 		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
@@ -53,13 +54,12 @@ class Level extends dn.Process {
 
 	override function onResize() {
 		super.onResize();
-		
+
 		// Update camera zoom
 		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
 	}
 
-	public function render() {
-	}
+	public function render() {}
 
 	override function postUpdate() {
 		super.postUpdate();
