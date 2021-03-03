@@ -45,8 +45,24 @@ class Level extends dn.Process {
 			root.addChild(background);
 		}
 
-		// Render an auto-layer
-		// TODO add layer render root.addChild( level.l_Collisions.render() );
+		root.addChild(currLevel.l_Floor.render());
+
+		for (player in currLevel.l_Entities.all_Player) {
+			// Read h2d.Tile based on the "type" enum value from the entity
+			var tile = Assets.world.getEnumTile(player.entityType);
+
+			// Apply the same pivot coord as the Entity to the Tile
+			// (in this case, the pivot is the bottom-center point of the tile)
+			tile.setCenterRatio(player.pivotX, player.pivotY);
+
+			// Display it
+			var bitmap = new h2d.Bitmap(tile);
+			root.addChild(bitmap);
+			bitmap.x = player.pixelX;
+			bitmap.y = player.pixelY;
+		};
+
+		root.addChild(currLevel.l_Ceiling.render());
 
 		// Update camera zoom
 		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
