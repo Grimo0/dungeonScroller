@@ -23,21 +23,21 @@ class Fx extends dn.Process {
 		pool = new ParticlePool(Assets.fx.tile, 2048, Const.FPS);
 
 		bgAddSb = new h2d.SpriteBatch(Assets.fx.tile);
-		game.scroller.add(bgAddSb, Const.DP_FX_BG);
+		game.scroller.add(bgAddSb, Const.GAME_SCROLLER_FX_BG);
 		bgAddSb.blendMode = Add;
 		bgAddSb.hasRotationScale = true;
 
 		bgNormalSb = new h2d.SpriteBatch(Assets.fx.tile);
-		game.scroller.add(bgNormalSb, Const.DP_FX_BG);
+		game.scroller.add(bgNormalSb, Const.GAME_SCROLLER_FX_BG);
 		bgNormalSb.hasRotationScale = true;
 
 		topAddSb = new h2d.SpriteBatch(Assets.fx.tile);
-		game.scroller.add(topAddSb, Const.DP_FX_FRONT);
+		game.scroller.add(topAddSb, Const.GAME_SCROLLER_FX_FRONT);
 		topAddSb.blendMode = Add;
 		topAddSb.hasRotationScale = true;
 
 		topNormalSb = new h2d.SpriteBatch(Assets.fx.tile);
-		game.scroller.add(topNormalSb, Const.DP_FX_FRONT);
+		game.scroller.add(topNormalSb, Const.GAME_SCROLLER_FX_FRONT);
 		topNormalSb.hasRotationScale = true;
 	}
 
@@ -136,7 +136,7 @@ class Fx extends dn.Process {
 
 	public function flashBangS(c : UInt, a : Float, ?t = 0.1) {
 		var e = new h2d.Bitmap(h2d.Tile.fromColor(c, 1, 1, a));
-		game.root.add(e, Const.DP_FX_FRONT);
+		game.root.add(e, Const.GAME_SCROLLER_FX_FRONT);
 		e.scaleX = game.w();
 		e.scaleY = game.h();
 		e.blendMode = Add;

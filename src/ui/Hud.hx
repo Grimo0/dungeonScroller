@@ -22,7 +22,7 @@ class Hud extends dn.Process {
 	public function new() {
 		super(Game.ME);
 
-		createRootInLayers(game.root, Const.DP_UI);
+		createRootInLayers(game.root, Const.MAIN_LAYER_UI);
 		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		flow = new h2d.Flow(root);

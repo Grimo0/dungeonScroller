@@ -12,6 +12,8 @@ class Assets {
 	public static var fx : SpriteLib;
 	public static var entities : SpriteLib;
 
+	public static var world : LDtkMap;
+
 	static var initDone = false;
 
 	public static function init() {
@@ -56,5 +58,7 @@ class Assets {
 		ui = dn.heaps.assets.Atlas.load("atlas/ui.atlas");
 		fx = dn.heaps.assets.Atlas.load("atlas/fx.atlas");
 		entities = dn.heaps.assets.Atlas.load("atlas/entities.atlas");
+
+		world = new LDtkMap();
 	}
 }

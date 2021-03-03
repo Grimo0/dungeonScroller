@@ -107,7 +107,7 @@ class Entity {
 			setPosCell(x, y);
 
 		spr = new HSprite(Assets.entities);
-		Game.ME.scroller.add(spr, Const.DP_MAIN);
+		Game.ME.scroller.add(spr, Const.GAME_SCROLLER_MAIN);
 		spr.colorAdd = new h3d.Vector();
 		baseColor = new h3d.Vector();
 		blinkColor = new h3d.Vector();
@@ -161,7 +161,7 @@ class Entity {
 		dy = bdy = 0;
 	}
 
-	public function is<T : Entity>(c : Class<T>) return Std.is(this, c);
+	public function is<T : Entity>(c : Class<T>) return Std.isOfType(this, c);
 
 	public function as<T : Entity>(c : Class<T>) : T return Std.downcast(this, c);
 
@@ -239,7 +239,7 @@ class Entity {
 	public function enableBounds() {
 		if (debugBounds == null) {
 			debugBounds = new h2d.Graphics();
-			game.scroller.add(debugBounds, Const.DP_TOP);
+			game.scroller.add(debugBounds, Const.GAME_SCROLLER_TOP);
 		}
 		invalidateDebugBounds = true;
 	}

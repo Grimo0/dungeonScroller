@@ -6,7 +6,7 @@ class Window extends dn.Process {
 	public function new() {
 		super(Game.ME);
 
-		createRootInLayers(Game.ME.root, Const.DP_UI);
+		createRootInLayers(Game.ME.root, Const.MAIN_LAYER_UI);
 		root.filter = new h2d.filter.ColorMatrix(); // force pixel perfect rendering
 
 		win = new h2d.Flow(root);
