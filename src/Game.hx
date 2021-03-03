@@ -1,3 +1,4 @@
+import imgui.ImGui;
 import en.Entity;
 import dn.Process;
 import hxd.Key;
@@ -14,6 +15,12 @@ class Game extends Process {
 
 	var curGameSpeed = 1.0;
 	var slowMos : Map<String, {id : String, t : Float, f : Float}> = new Map();
+
+	public var locked = false;
+
+	var sav : GameSave = new GameSave();
+	
+	var flags : Map<String, Int> = new Map();
 
 	public function new() {
 		super(Main.ME);
@@ -33,7 +40,67 @@ class Game extends Process {
 		hud = new ui.Hud();
 
 		Process.resizeAll();
-		trace(Lang.t._("Game is ready."));
+
+		root.alpha = 0;
+		startLevel();
+		tw.createS(root.alpha, 1, #if debug 0 #else 1 #end);
+	}
+
+	public function load() {
+		sav = hxd.Save.load(sav, 'save/game');
+
+		flags = sav.flags.copy();
+	}
+
+	public function save() {
+		sav.flags = flags.copy();
+		sav.levelUID = level.uniqId;
+
+		hxd.Save.save(sav, 'save/game');
+	}
+
+	public inline function setFlag(k : String, ?v = 1) flags.set(k, v);
+
+	public inline function unsetFlag(k : String) flags.remove(k);
+
+	public inline function hasFlag(k : String) return getFlag(k) != 0;
+
+	public inline function getFlag(k : String) {
+		var f = flags.get(k);
+		return f != null ? f : 0;
+	}
+
+	function startLevel(?levelUID : Int) {
+		locked = false;
+
+		scroller.removeChildren();
+
+		level.currLevel = Assets.world.getLevel(levelUID != null ? levelUID : sav.levelUID);
+
+		Process.resizeAll();
+	}
+
+	public function transition(levelUID : Null<Int>, event : String = null, ?onDone : Void->Void) {
+		locked = true;
+
+		tw.createS(root.alpha, 0, #if debug 0 #else 1 #end).onEnd = function() {
+			if (levelUID == null) {
+				save();
+				
+				Main.ME.startMainMenu();
+			} else {
+				startLevel(levelUID);
+
+				var level = Assets.world.getLevel(levelUID);
+				flags.set(level.identifier, 1);
+				save();
+
+				tw.createS(root.alpha, 1, #if debug 0 #else 1 #end);
+			}
+
+			if (onDone != null)
+				onDone();
+		}
 	}
 
 	public function onCdbReload() {}
@@ -115,14 +182,19 @@ class Game extends Process {
 			if (!e.destroyed)
 				e.update();
 
+		#if debug
+		if (Main.ME.debug) {
+			updateImGui();
+		}
+		#end
+
 		if (!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
 			#if hl
 			// Exit
 			if (ca.isKeyboardPressed(Key.ESCAPE)) {
-				if (!cd.hasSetS("exitWarn", 3))
-					trace(Lang.t._("Press ESCAPE again to exit."));
+				if (!cd.hasSetS("exitWarn", 3)) {}
 				else
-					hxd.System.exit();
+					return Main.ME.startMainMenu();
 			}
 			#end
 
@@ -130,6 +202,15 @@ class Game extends Process {
 			if (ca.selectPressed())
 				Main.ME.startGame();
 		}
+	}
+
+	function updateImGui() {
+		var scenes = Assets.world.levels;
+		ImGui.comboWithArrow('currScene', Assets.world.levels.indexOf(level.currLevel), scenes,
+			(i : Int) -> Assets.world.levels[i].identifier,
+			(i : Int) -> transition(Assets.world.levels[i].uid)
+		);
+		ImGui.separator();
 	}
 
 	override function postUpdate() {
@@ -146,6 +227,5 @@ class Game extends Process {
 		// Update slow-motions
 		updateSlowMos();
 		setTimeMultiplier((0.2 + 0.8 * curGameSpeed) * (ucd.has("stopFrame") ? 0.3 : 1));
-		Assets.entities.tmod = tmod;
 	}
 }
