@@ -329,7 +329,16 @@
 							"height": 64,
 							"defUid": 5,
 							"px": [544,1824],
-							"fieldInstances": [{ "__identifier": "Type", "__value": null, "__type": "LocalEnum.EntityType", "defUid": 59, "realEditorValues": [] }]
+							"fieldInstances": [{
+								"__identifier": "Type",
+								"__value": "Player",
+								"__type": "LocalEnum.EntityType",
+								"defUid": 59,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["Player"]
+								}]
+							}]
 						}
 					]
 				},
@@ -530,7 +539,16 @@
 							"height": 64,
 							"defUid": 5,
 							"px": [544,1888],
-							"fieldInstances": [{ "__identifier": "Type", "__value": null, "__type": "LocalEnum.EntityType", "defUid": 59, "realEditorValues": [] }]
+							"fieldInstances": [{
+								"__identifier": "Type",
+								"__value": "Player",
+								"__type": "LocalEnum.EntityType",
+								"defUid": 59,
+								"realEditorValues": [{
+									"id": "V_String",
+									"params": ["Player"]
+								}]
+							}]
 						}
 					]
 				},
