@@ -1,6 +1,6 @@
 # About
 
-Base structure for my games forked from (https://github.com/deepnight/gameBase).
+Base structure for this game is https://github.com/Grimo0/gameBase themself forked from (https://github.com/deepnight/gameBase).
 The language is **Haxe** (https://haxe.org).
 Builds are done with **Hashlink** (https://hashlink.haxe.org), a virtual machine, working on all platforms. 
 And using **Heaps** (https://heaps.io), a 2D/3D Haxe library (*ie.* an Haxelib). All of those tools are free and open-source.
