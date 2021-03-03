@@ -19,10 +19,11 @@ class Const {
 	static var _inc = 0;
 	public static var MAIN_LAYER_GAME = _inc++;
 	public static var MAIN_LAYER_UI = _inc++;
+	
 	public static var GAME_SCROLLER = _inc = 0;
 	public static var GAME_DEBUG = _inc++;
-	public static var GAME_TALK = _inc++;
 	public static var GAME_CINEMATIC = _inc++;
+
 	public static var GAME_SCROLLER_BG = _inc = 0;
 	public static var GAME_SCROLLER_FX_BG = _inc++;
 	public static var GAME_SCROLLER_MAIN = _inc++;
