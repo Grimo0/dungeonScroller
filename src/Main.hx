@@ -67,7 +67,7 @@ class Main extends dn.Process {
 	}
 
 	override function update() {
-		Assets.tiles.tmod = tmod;
+		Assets.entities.tmod = tmod;
 		super.update();
 	}
 }

@@ -106,7 +106,7 @@ class Entity {
 		if (x != null && y != null)
 			setPosCell(x, y);
 
-		spr = new HSprite(Assets.tiles);
+		spr = new HSprite(Assets.entities);
 		Game.ME.scroller.add(spr, Const.DP_MAIN);
 		spr.colorAdd = new h3d.Vector();
 		baseColor = new h3d.Vector();

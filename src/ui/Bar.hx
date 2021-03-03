@@ -29,10 +29,10 @@ class Bar extends h2d.Object {
 		curMax = 1;
 		cd = new dn.Cooldown(Const.FPS);
 
-		bg = new h2d.ScaleGrid(Assets.tiles.getTile("uiBarBg"), 2, 2, this);
+		bg = new h2d.ScaleGrid(Assets.ui.getTile("uiBarBg"), 2, 2, this);
 		bg.colorAdd = blinkColor = new h3d.Vector();
 
-		bar = new h2d.ScaleGrid(Assets.tiles.getTile("uiBar"), 1, 1, this);
+		bar = new h2d.ScaleGrid(Assets.ui.getTile("uiBar"), 1, 1, this);
 
 		setSize(wid, hei, 1);
 		defaultColor = color = c;
@@ -57,12 +57,12 @@ class Bar extends h2d.Object {
 		if (gradTg != null)
 			gradTg.remove();
 
-		gradTg = new h2d.TileGroup(Assets.tiles.tile, this);
+		gradTg = new h2d.TileGroup(Assets.placeholder.tile, this);
 		gradTg.colorAdd = blinkColor;
 		gradTg.setDefaultColor(0x0, alpha);
 
 		var x = step - 1;
-		var t = Assets.tiles.getTile("pixel");
+		var t = Assets.placeholder.getTile("pixel");
 		while (x < innerBarMaxWidth) {
 			gradTg.addTransform(bar.x + x, bar.y, 1, innerBarHeight, 0, t);
 			x += step;
@@ -71,11 +71,11 @@ class Bar extends h2d.Object {
 
 	public function addGraduation(xRatio : Float, c : UInt, ?alpha = 1.0) {
 		if (gradTg == null) {
-			gradTg = new h2d.TileGroup(Assets.tiles.tile, this);
+			gradTg = new h2d.TileGroup(Assets.placeholder.tile, this);
 			gradTg.colorAdd = blinkColor;
 		}
 		gradTg.setDefaultColor(c, alpha);
-		gradTg.addTransform(bar.x + Std.int(innerBarMaxWidth * xRatio), bar.y, 1, innerBarHeight, 0, Assets.tiles.getTile("pixel"));
+		gradTg.addTransform(bar.x + Std.int(innerBarMaxWidth * xRatio), bar.y, 1, innerBarHeight, 0, Assets.placeholder.getTile("pixel"));
 	}
 
 	inline function set_color(c) {

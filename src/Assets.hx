@@ -7,7 +7,10 @@ class Assets {
 	public static var fontMedium : h2d.Font;
 	public static var fontLarge : h2d.Font;
 
-	public static var tiles : SpriteLib;
+	public static var placeholder : SpriteLib;
+	public static var ui : SpriteLib;
+	public static var fx : SpriteLib;
+	public static var entities : SpriteLib;
 
 	static var initDone = false;
 
@@ -48,6 +51,10 @@ class Assets {
 		fontMedium = hxd.Res.fonts.barlow_condensed_medium_regular_17.toFont();
 		fontLarge = hxd.Res.fonts.barlow_condensed_medium_regular_32.toFont();
 
-		tiles = dn.heaps.assets.Atlas.load("atlas/tiles.atlas");
+		// -- Atlases
+		placeholder = dn.heaps.assets.Atlas.load("atlas/placeholder.atlas");
+		ui = dn.heaps.assets.Atlas.load("atlas/ui.atlas");
+		fx = dn.heaps.assets.Atlas.load("atlas/fx.atlas");
+		entities = dn.heaps.assets.Atlas.load("atlas/entities.atlas");
 	}
 }
