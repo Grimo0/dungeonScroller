@@ -14,6 +14,7 @@ And using **Heaps** (https://heaps.io), a 2D/3D Haxe library (*ie.* an Haxelib).
 	- `haxelib git domkit https://github.com/HeapsIO/domkit.git` 
 	- `haxelib install redistHelper` for the redist packing tasks
 	- `haxelib install formatter` for the format src task
+	- `haxelib install ldtk-haxe-api` for the LDtk support
 - Install Java to use the texture packing task
 - Download it into your local repository or fork this project then clone yours 
 - Open the root folder with vscode
