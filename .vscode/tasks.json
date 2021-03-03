@@ -143,7 +143,10 @@
 		{
 			"label": "Pack textures",
 			"type": "shell",
-			"command": "foreach ($line in (Get-Content -Path ./art/packList.txt)) { java -cp tools/runnable-texturepacker.jar com.badlogic.gdx.tools.texturepacker.TexturePacker art/$line res/atlas $line }",
+			"command": "foreach ($line in (Get-Content -Path ./art/packList.txt)) { java -cp ./tools/runnable-texturepacker.jar com.badlogic.gdx.tools.texturepacker.TexturePacker art/$line res/atlas $line }",
+			"options": {
+				"shell": {"executable": "powershell.exe"}
+			},
 			"presentation": {
 				"reveal": "silent",
 				"revealProblems": "onProblem",
