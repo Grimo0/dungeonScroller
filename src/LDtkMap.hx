@@ -1,1 +1,1 @@
-private typedef _Tmp = haxe.macro.MacroType<[ ldtk.Project.build("res/ld/LDtkMap.ldtk") ]>;
+private typedef _Tmp = haxe.macro.MacroType<[ ldtk.Project.build("res/LDtkMap.ldtk") ]>;
