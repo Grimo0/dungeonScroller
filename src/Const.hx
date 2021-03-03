@@ -6,7 +6,7 @@ class Const {
 	public static var SCALE = 1.0; // ignored if auto-scaling
 	public static var UI_SCALE = 1.0;
 	public static var AUTO_SCALE_UI_TARGET_HEI = 1080; // -1 to disable auto-scaling on height
-	public static var GRID = 16;
+	public static var GRID = 64;
 	public static var MAX_CELLS_PER_WIDTH = 12;
 
 	static var _uniq = 0;
