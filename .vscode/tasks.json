@@ -28,7 +28,7 @@
 			"type": "hxml",
 			"file": "hl.dx.hxml",
 			"presentation": {
-				"reveal": "never",
+				"reveal": "silent",
 				"panel": "dedicated",
 				"clear": true
 			},
@@ -40,6 +40,24 @@
 			],
 			"group": "build",
 		},
+		{
+			"label": "HL redist",
+			"type": "shell",
+			"presentation": {
+				"reveal": "silent",
+				"panel": "shared"
+			},
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe",
+				"$haxe-error",
+				"$haxe-trace"
+			],
+			"group": "build",
+			"command": "haxelib run redistHelper hl.dx.hxml hl.sdl.hxml -p ajisai",
+			"detail": "Create a package in the redist folder."
+		},
+
 		{
 			"label": "JS debug",
 			"type": "hxml",
@@ -72,13 +90,11 @@
 			"group": "build",
 		},
 		{
-			"label": "Flash release",
-			"type": "hxml",
-			"file": "swf.hxml",
+			"label": "JS redist",
+			"type": "shell",
 			"presentation": {
-				"reveal": "never",
-				"panel": "dedicated",
-				"clear": true
+				"reveal": "silent",
+				"panel": "shared"
 			},
 			"problemMatcher": [
 				"$haxe-absolute",
@@ -87,7 +103,10 @@
 				"$haxe-trace"
 			],
 			"group": "build",
+			"command": "haxelib run redistHelper js.hxml -zip -p ajisai",
+			"detail": "Create a package in the redist folder."
 		},
+
 		{
 			"label": "Lang",
 			"type": "hxml",
@@ -110,6 +129,7 @@
 			"command": "haxelib run formatter -s src",
 			"presentation": {
 				"reveal": "silent",
+				"revealProblems": "onProblem",
 				"panel": "shared"
 			},
 			"problemMatcher": [
@@ -119,6 +139,23 @@
 				"$haxe-trace"
 			],
 			"detail": "Format all files in /src"
+		},
+		{
+			"label": "Pack textures",
+			"type": "shell",
+			"command": "foreach ($line in (Get-Content -Path ./art/packList.txt)) { java -cp tools/runnable-texturepacker.jar com.badlogic.gdx.tools.texturepacker.TexturePacker art/$line res/atlas $line }",
+			"presentation": {
+				"reveal": "silent",
+				"revealProblems": "onProblem",
+				"panel": "shared"
+			},
+			"problemMatcher": [
+				"$haxe-absolute",
+				"$haxe",
+				"$haxe-error",
+				"$haxe-trace"
+			],
+			"detail": "Pack all textures in art into an atlas in res/atlas"
 		}
 	]
 }

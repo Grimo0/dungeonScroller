@@ -4,8 +4,8 @@
 	"skipErrorMessage": true,
 	"commands": [
 		{
-			"text": "🍊 Build HL",
-			"color": "orange",
+			"text": "🍊 Build",
+			"color": "yellow",
 			"commandType":"palette",
 			"command": "workbench.action.tasks.runTask|HL release",
 			"alignment": "right",
@@ -13,12 +13,29 @@
 			"priority": -10
 		},
 		{
-			"text": "Run HL",
-			"color": "orange",
+			"text": "Run",
+			"color": "yellow",
 			"command": "hl bin/client.hl",
 			"alignment": "right",
 			"skipTerminateQuickPick": false,
 			"priority": -11
+		},
+		{
+			"text": "🍪 Build JS",
+			"color": "yellow",
+			"commandType":"palette",
+			"command": "workbench.action.tasks.runTask|JS release",
+			"alignment": "right",
+			"skipTerminateQuickPick": false,
+			"priority": -12
+		},
+		{
+			"text": "Run JS",
+			"color": "yellow",
+			"command": "js.html",
+			"alignment": "right",
+			"skipTerminateQuickPick": false,
+			"priority": -13
 		},
 		{
 			"text": "🧹 Format src",
@@ -30,7 +47,16 @@
 			"priority": -20
 		},
 		{
-			"text": "🅰️ Build POT",
+			"text": "🧱 Pack textures",
+			"color": "white",
+			"commandType":"palette",
+			"command": "workbench.action.tasks.runTask|Pack textures",
+			"alignment": "right",
+			"skipTerminateQuickPick": false,
+			"priority": -21
+		},
+		{
+			"text": "💬 Build POT",
 			"color": "yellow",
 			"commandType":"palette",
 			"command": "workbench.action.tasks.runTask|Lang",
@@ -41,10 +67,18 @@
 		{
 			"text": "📦 Redist",
 			"color": "lightgreen",
-			"command": "haxelib run redistHelper hl.dx.hxml hl.sdl.hxml js.hxml swf.hxml -o redist.$ -P MyGame",
+			"command": "workbench.action.tasks.runTask|HL redist",
 			"alignment": "right",
 			"skipTerminateQuickPick": false,
 			"priority": -50
+		},
+		{
+			"text": "📦 Redist JS",
+			"color": "lightgreen",
+			"command": "workbench.action.tasks.runTask|JS redist",
+			"alignment": "right",
+			"skipTerminateQuickPick": false,
+			"priority": -51
 		}
 	]
 }
