@@ -9,7 +9,7 @@
 		"url": "https://ldtk.io"
 	},
 	"jsonVersion": "0.8.1",
-	"nextUid": 59,
+	"nextUid": 60,
 	"worldLayout": "LinearVertical",
 	"worldGridWidth": 256,
 	"worldGridHeight": 256,
@@ -187,7 +187,28 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
 			"pivotY": 0.5,
-			"fieldDefs": []
+			"fieldDefs": [
+				{
+					"identifier": "Type",
+					"__type": "LocalEnum.EntityType",
+					"uid": 59,
+					"type": { "id": "F_Enum", "params": [53] },
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
+					"editorDisplayPos": "Above",
+					"editorAlwaysShow": false,
+					"editorCutLongValues": true,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLangageMode": null
+				}
+			]
 		}
 	], "tilesets": [
 		{
@@ -214,7 +235,7 @@
 			"savedSelections": [],
 			"cachedPixelData": { "opaqueTiles": "0", "averageColors": "2d56" }
 		}
-	], "enums": [{ "identifier": "Entities", "uid": 53, "values": [{ "id": "Player", "tileId": 0, "__tileSrcRect": [0,0,64,64] }], "iconTilesetUid": 54, "externalRelPath": null, "externalFileChecksum": null }], "externalEnums": [], "levelFields": [] },
+	], "enums": [{ "identifier": "EntityType", "uid": 53, "values": [{ "id": "Player", "tileId": 0, "__tileSrcRect": [0,0,64,64] }], "iconTilesetUid": 54, "externalRelPath": null, "externalFileChecksum": null }], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
 			"identifier": "Level1",
@@ -308,7 +329,7 @@
 							"height": 64,
 							"defUid": 5,
 							"px": [544,1824],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Type", "__value": null, "__type": "LocalEnum.EntityType", "defUid": 59, "realEditorValues": [] }]
 						}
 					]
 				},
@@ -509,7 +530,7 @@
 							"height": 64,
 							"defUid": 5,
 							"px": [544,1888],
-							"fieldInstances": []
+							"fieldInstances": [{ "__identifier": "Type", "__value": null, "__type": "LocalEnum.EntityType", "defUid": 59, "realEditorValues": [] }]
 						}
 					]
 				},
