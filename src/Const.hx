@@ -5,6 +5,7 @@ class Const {
 	public static var AUTO_SCALE_TARGET_HEI = -1; // -1 to disable auto-scaling on height
 	public static var SCALE = 1.0; // ignored if auto-scaling
 	public static var UI_SCALE = 1.0;
+	public static var AUTO_SCALE_UI_TARGET_HEI = 1080; // -1 to disable auto-scaling on height
 	public static var GRID = 16;
 	public static var MAX_CELLS_PER_WIDTH = 12;
 
@@ -19,7 +20,7 @@ class Const {
 	static var _inc = 0;
 	public static var MAIN_LAYER_GAME = _inc++;
 	public static var MAIN_LAYER_UI = _inc++;
-	
+
 	public static var GAME_SCROLLER = _inc = 0;
 	public static var GAME_DEBUG = _inc++;
 	public static var GAME_CINEMATIC = _inc++;

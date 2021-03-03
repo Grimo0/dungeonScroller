@@ -44,7 +44,12 @@ class Main extends dn.Process {
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
 
 		// Start
+		#if debug
 		delayer.addF(startGame, 1);
+		debug = true;
+		#else
+		delayer.addF(startMainMenu, 1);
+		#end
 	}
 
 	public function startMainMenu() {
@@ -78,7 +83,8 @@ class Main extends dn.Process {
 		else if (Const.AUTO_SCALE_TARGET_HEI > 0)
 			Const.SCALE = M.ceil(h() / Const.AUTO_SCALE_TARGET_HEI);
 
-		Const.UI_SCALE = Const.SCALE;
+		if (Const.AUTO_SCALE_UI_TARGET_HEI > 0)
+			Const.UI_SCALE = Math.max(1., h() / Const.AUTO_SCALE_UI_TARGET_HEI);
 	}
 
 	override function update() {
