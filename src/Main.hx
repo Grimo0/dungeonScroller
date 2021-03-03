@@ -1,10 +1,13 @@
-import Data;
+import imgui.ImGui;
+import ui.MainMenu;
 import hxd.Key;
 
 class Main extends dn.Process {
 	public static var ME : Main;
 
 	public var controller : dn.heaps.Controller;
+
+	public var debug = false;
 
 	public function new(s : h2d.Scene) {
 		super();
@@ -44,6 +47,18 @@ class Main extends dn.Process {
 		delayer.addF(startGame, 1);
 	}
 
+	public function startMainMenu() {
+		killAllChildrenProcesses();
+
+		if (MainMenu.ME != null) {
+			MainMenu.ME.destroy();
+			delayer.addF(function() {
+				new MainMenu();
+			}, 1);
+		} else
+			new MainMenu();
+	}
+
 	public function startGame() {
 		if (Game.ME != null) {
 			Game.ME.destroy();
@@ -67,7 +82,61 @@ class Main extends dn.Process {
 	}
 
 	override function update() {
-		Assets.entities.tmod = tmod;
 		super.update();
+
+		#if debug
+		if (debug) {
+			updateImGui();
+		}
+		#end
+	}
+
+	function updateImGui() {
+		var halfBtnSize : ImVec2 = {x: ImGui.getColumnWidth() / 2 - 5, y: ImGui.getTextLineHeightWithSpacing()};
+		if (ImGui.button('New game', halfBtnSize)) {
+			hxd.Save.delete('save/game');
+			delayer.addF(startGame, 1);
+		}
+		if (ImGui.treeNodeEx('Options')) {
+			if (ImGui.button('Save', halfBtnSize))
+				Options.ME.save();
+			ImGui.sameLine(0, 5);
+			if (ImGui.button('Load', halfBtnSize))
+				Options.ME.load();
+
+			Options.ME.imGuiDebugFields();
+
+			ImGui.treePop();
+		}
+		ImGui.separator();
+	}
+
+	#if debug
+	var imguiCaptureMouse = false;
+	#end
+	override function postUpdate() {
+		super.postUpdate();
+
+		#if debug
+		if (hxd.Key.isPressed(hxd.Key.F1)) {
+			debug = !debug;
+			if (!debug) {
+				imguiCaptureMouse = false;
+				controller.unlock();
+			}
+		}
+
+		if (debug) {
+			if (ImGui.wantCaptureMouse()) {
+				if (!imguiCaptureMouse && !controller.isLocked()) {
+					imguiCaptureMouse = true;
+					controller.lock();
+				}
+			} else if (imguiCaptureMouse) {
+				imguiCaptureMouse = false;
+				controller.unlock();
+			}
+		}
+		#end
 	}
 }
