@@ -1,3 +1,5 @@
+import en.Unit;
+
 class Level extends dn.Process {
 	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
@@ -18,8 +20,8 @@ class Level extends dn.Process {
 	inline function get_hei() return currLevel.pxHei;
 
 	public function new() {
-		super(Game.ME);
-		createRootInLayers(Game.ME.scroller, Const.GAME_SCROLLER_BG);
+		super(game);
+		createRootInLayers(game.scroller, Const.GAME_SCROLLER_LEVEL);
 	}
 
 	public inline function isValid(cx, cy)
@@ -45,34 +47,36 @@ class Level extends dn.Process {
 			root.addChild(background);
 		}
 
-		root.addChild(currLevel.l_Floor.render());
+		root.add(currLevel.l_Floor.render(), Const.GAME_LEVEL_FLOOR);
 
 		for (player in currLevel.l_Entities.all_Player) {
 			// Read h2d.Tile based on the "type" enum value from the entity
-			var tile = Assets.world.getEnumTile(player.entityType);
+			var tile = Assets.world.getEnumTile(player.f_Type);
+			if (tile == null) return;
 
 			// Apply the same pivot coord as the Entity to the Tile
 			// (in this case, the pivot is the bottom-center point of the tile)
 			tile.setCenterRatio(player.pivotX, player.pivotY);
 
-			// Display it
-			var bitmap = new h2d.Bitmap(tile);
-			root.addChild(bitmap);
-			bitmap.x = player.pixelX;
-			bitmap.y = player.pixelY;
+			var p = new Unit(player.identifier);
+			p.setPosCell(player.cx, player.cy);
+
+			game.camera.target = p;
+
+			break; // Only one player
 		};
 
-		root.addChild(currLevel.l_Ceiling.render());
+		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
 
 		// Update camera zoom
-		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
 	}
 
 	override function onResize() {
 		super.onResize();
 
 		// Update camera zoom
-		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
 	}
 
 	public function render() {}

@@ -107,7 +107,7 @@ class Entity {
 			setPosCell(x, y);
 
 		spr = new HSprite(Assets.entities);
-		Game.ME.scroller.add(spr, Const.GAME_SCROLLER_MAIN);
+		game.level.root.add(spr, Const.GAME_LEVEL_ENTITIES);
 		spr.colorAdd = new h3d.Vector();
 		baseColor = new h3d.Vector();
 		blinkColor = new h3d.Vector();
@@ -133,16 +133,6 @@ class Entity {
 		yr = (y - cy * Const.GRID) / Const.GRID;
 		onPosManuallyChanged();
 	}
-
-	#if heapsOgmo
-	public function setPosUsingOgmoEnt(oe : ogmo.Entity) {
-		cx = Std.int(oe.x / Const.GRID);
-		cy = Std.int(oe.y / Const.GRID);
-		xr = (oe.x - cx * Const.GRID) / Const.GRID;
-		yr = (oe.y - cy * Const.GRID) / Const.GRID;
-		onPosManuallyChanged();
-	}
-	#end
 
 	function onPosManuallyChanged() {
 		if (M.dist(footX, footY, prevFrameFootX, prevFrameFootY) > Const.GRID * 2) {
@@ -221,8 +211,10 @@ class Entity {
 			debugLabel = null;
 		}
 		if (v != null) {
-			if (debugLabel == null)
-				debugLabel = new h2d.Text(Assets.fontTiny, Game.ME.scroller);
+			if (debugLabel == null) {
+				debugLabel = new h2d.Text(Assets.fontTiny);
+				game.level.root.add(debugLabel, Const.GAME_LEVEL_TOP);
+			}
 			debugLabel.text = Std.string(v);
 			debugLabel.textColor = c;
 		}
@@ -239,7 +231,7 @@ class Entity {
 	public function enableBounds() {
 		if (debugBounds == null) {
 			debugBounds = new h2d.Graphics();
-			game.scroller.add(debugBounds, Const.GAME_SCROLLER_TOP);
+			game.level.root.add(debugBounds, Const.GAME_LEVEL_TOP);
 		}
 		invalidateDebugBounds = true;
 	}
