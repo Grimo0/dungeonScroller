@@ -22,6 +22,8 @@ class Main extends dn.Process {
 		engine.fullScreen = true;
 		#end
 
+		sys.FileSystem.createDirectory('save');
+
 		// Assets & data init
 		Assets.init();
 		new ui.Console(Assets.fontTiny, s);
