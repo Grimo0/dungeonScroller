@@ -1,3 +1,9 @@
 res/.tmp
-redist.*
+res/atlas
+redist/
+redist/*.*
 bin/*.*
+art/**/*.png~
+art/**/*.kra~
+imgui.ini
+*.sav
