@@ -74,7 +74,7 @@ class Entity {
 	public var centerX(get, never) : Float;
 	inline function get_centerX() return footX;
 	public var centerY(get, never) : Float;
-	inline function get_centerY() return footY - hei * 0.5;
+	inline function get_centerY() return footY;
 	public var prevFrameFootX : Float = -Const.INFINITE;
 	public var prevFrameFootY : Float = -Const.INFINITE;
 

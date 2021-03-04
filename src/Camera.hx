@@ -34,8 +34,8 @@ class Camera extends dn.Process {
 
 	public function recenter() {
 		if (target != null) {
-			x = target.centerX;
-			y = target.centerY;
+			x = target.footX;
+			y = target.footY;
 		}
 	}
 
@@ -57,8 +57,8 @@ class Camera extends dn.Process {
 		if (target != null) {
 			var s = 0.006;
 			var deadZone = 5;
-			var tx = target.centerX;
-			var ty = target.centerY;
+			var tx = target.footX;
+			var ty = target.footY;
 
 			var d = M.dist(x, y, tx, ty);
 			if (d >= deadZone) {
