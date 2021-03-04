@@ -122,7 +122,7 @@ class Entity {
 		cx = x;
 		cy = y;
 		xr = 0.5;
-		yr = 1;
+		yr = 0.5;
 		onPosManuallyChanged();
 	}
 
@@ -388,7 +388,7 @@ class Entity {
 		while (steps > 0) {
 			xr += step;
 
-			// [ add X collisions checks here ]
+			// [ TODO add X collisions checks here ]
 
 			while (xr > 1) {
 				xr--;
@@ -413,7 +413,7 @@ class Entity {
 		while (steps > 0) {
 			yr += step;
 
-			// [ add Y collisions checks here ]
+			// [ TODO add Y collisions checks here ]
 
 			while (yr > 1) {
 				yr--;

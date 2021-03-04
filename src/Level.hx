@@ -60,13 +60,11 @@ class Level extends dn.Process {
 			var tile = Assets.world.getEnumTile(player.f_Type);
 			if (tile == null) return;
 
-			// Apply the same pivot coord as the Entity to the Tile
-			// (in this case, the pivot is the bottom-center point of the tile)
-			tile.setCenterRatio(player.pivotX, player.pivotY);
-
 			var p = new Unit(player.identifier);
 			p.spr.tile.switchTexture(tile);
 			p.spr.tile.setPosition(tile.x, tile.y);
+			p.spr.tile.setSize(tile.width, tile.height);
+			p.spr.tile.setCenterRatio(player.pivotX, player.pivotY);
 			p.setPosCell(player.cx, player.cy);
 
 			game.camera.trackTarget(p, true);
