@@ -13,6 +13,9 @@ class Level extends dn.Process {
 		return currLevel;
 	}
 
+	public var gridSize(get, never) : Int;
+	inline function get_gridSize() return currLevel.l_Floor.gridSize;
+
 	public var wid(get, never) : Int;
 	inline function get_wid() return currLevel.pxWid;
 
@@ -41,10 +44,13 @@ class Level extends dn.Process {
 	}
 
 	public function initLevel() {
+		game.scroller.add(root, Const.GAME_SCROLLER_LEVEL);
+		root.removeChildren();
+
 		// Get level background image
 		if (currLevel.hasBgImage()) {
 			var background = currLevel.getBgBitmap();
-			root.addChild(background);
+			root.add(background, Const.GAME_LEVEL_BG);
 		}
 
 		root.add(currLevel.l_Floor.render(), Const.GAME_LEVEL_FLOOR);
@@ -59,9 +65,11 @@ class Level extends dn.Process {
 			tile.setCenterRatio(player.pivotX, player.pivotY);
 
 			var p = new Unit(player.identifier);
+			p.spr.tile.switchTexture(tile);
+			p.spr.tile.setPosition(tile.x, tile.y);
 			p.setPosCell(player.cx, player.cy);
 
-			game.camera.target = p;
+			game.camera.trackTarget(p, true);
 
 			break; // Only one player
 		};
@@ -69,14 +77,15 @@ class Level extends dn.Process {
 		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
 
 		// Update camera zoom
-		Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		// Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	override function onResize() {
+		if (currLevel == null) return;
 		super.onResize();
 
 		// Update camera zoom
-		Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		// Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	public function render() {}

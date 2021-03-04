@@ -33,12 +33,12 @@ class Entity {
 	public var cy = 0;
 	public var xr = 0.5;
 	public var yr = 1.0;
-	public var hei(default, set) : Float = Const.GRID;
+	public var hei(default, set) : Float = game.level.gridSize;
 	inline function set_hei(v) {
 		invalidateDebugBounds = true;
 		return hei = v;
 	}
-	public var radius(default, set) = Const.GRID * 0.5;
+	public var radius(default, set) = game.level.gridSize * 0.5;
 	inline function set_radius(v) {
 		invalidateDebugBounds = true;
 		return radius = v;
@@ -64,9 +64,9 @@ class Entity {
 	}
 
 	public var footX(get, never) : Float;
-	inline function get_footX() return (cx + xr) * Const.GRID;
+	inline function get_footX() return (cx + xr) * game.level.gridSize;
 	public var footY(get, never) : Float;
-	inline function get_footY() return (cy + yr) * Const.GRID;
+	inline function get_footY() return (cy + yr) * game.level.gridSize;
 	public var headX(get, never) : Float;
 	inline function get_headX() return footX;
 	public var headY(get, never) : Float;
@@ -112,7 +112,7 @@ class Entity {
 		baseColor = new h3d.Vector();
 		blinkColor = new h3d.Vector();
 		spr.colorMatrix = colorMatrix = h3d.Matrix.I();
-		spr.setCenterRatio(0.5, 1);
+		spr.setCenterRatio(0.5, 0.5);
 
 		if (ui.Console.ME.hasFlag("bounds"))
 			enableBounds();
@@ -127,15 +127,15 @@ class Entity {
 	}
 
 	public function setPosPixel(x : Float, y : Float) {
-		cx = Std.int(x / Const.GRID);
-		cy = Std.int(y / Const.GRID);
-		xr = (x - cx * Const.GRID) / Const.GRID;
-		yr = (y - cy * Const.GRID) / Const.GRID;
+		cx = Std.int(x / game.level.gridSize);
+		cy = Std.int(y / game.level.gridSize);
+		xr = (x - cx * game.level.gridSize) / game.level.gridSize;
+		yr = (y - cy * game.level.gridSize) / game.level.gridSize;
 		onPosManuallyChanged();
 	}
 
 	function onPosManuallyChanged() {
-		if (M.dist(footX, footY, prevFrameFootX, prevFrameFootY) > Const.GRID * 2) {
+		if (M.dist(footX, footY, prevFrameFootX, prevFrameFootY) > game.level.gridSize * 2) {
 			prevFrameFootX = footX;
 			prevFrameFootY = footY;
 		}
@@ -250,7 +250,7 @@ class Entity {
 
 		// Feet
 		debugBounds.lineStyle(1, 0xffffff, 1);
-		var d = Const.GRID * 0.2;
+		var d = game.level.gridSize * 0.2;
 		debugBounds.moveTo(-d, 0);
 		debugBounds.lineTo(d, 0);
 		debugBounds.moveTo(0, -d);
@@ -335,8 +335,8 @@ class Entity {
 	}
 
 	public function postUpdate() {
-		spr.x = (cx + xr) * Const.GRID;
-		spr.y = (cy + yr) * Const.GRID;
+		spr.x = (cx + xr) * game.level.gridSize;
+		spr.y = (cy + yr) * game.level.gridSize;
 		spr.scaleX = dir * sprScaleX * sprSquashX;
 		spr.scaleY = sprScaleY * sprSquashY;
 		spr.visible = visible;

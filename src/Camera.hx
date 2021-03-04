@@ -94,24 +94,18 @@ class Camera extends dn.Process {
 			var scroller = Game.ME.scroller;
 
 			// Update scroller
-			if (wid < level.wid * Const.GRID)
-				scroller.x = M.fclamp(-x + wid * 0.5, wid - level.wid * Const.GRID, 0);
+			if (wid < level.wid)
+				scroller.x = M.fclamp(-x + wid * 0.5, wid - level.wid, 0);
 			else if (level.wid != 0)
-				scroller.x = wid * 0.5 - level.wid * 0.5 * Const.GRID;
+				scroller.x = wid * 0.5 - level.wid * 0.5;
 			else
-				scroller.x = - level.wid * 0.5 * Const.GRID;
-			if (hei < level.hei * Const.GRID)
-				scroller.y = M.fclamp(-y + hei * 0.5, hei - level.hei * Const.GRID, 0);
+				scroller.x = - level.wid * 0.5;
+			if (hei < level.hei)
+				scroller.y = M.fclamp(-y + hei * 0.5, hei - level.hei, 0);
 			else if (level.hei != 0)
-				scroller.y = hei * 0.5 - level.hei * 0.5 * Const.GRID;
+				scroller.y = hei * 0.5 - level.hei * 0.5;
 			else
-				scroller.y = - level.hei * 0.5 * Const.GRID;
-
-			// Clamp
-			if (wid < level.wid * Const.GRID)
-				scroller.x = M.fclamp(scroller.x, wid - level.wid * Const.GRID, 0);
-			if (hei < level.hei * Const.GRID)
-				scroller.y = M.fclamp(scroller.y, hei - level.hei * Const.GRID, 0);
+				scroller.y = - level.hei * 0.5;
 
 			// Bumps friction
 			bumpOffX *= Math.pow(0.75, tmod);
