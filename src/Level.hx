@@ -6,7 +6,7 @@ class Level extends dn.Process {
 	public var fx(get, never) : Fx;
 	inline function get_fx() return game.fx;
 
-	public var currLevel(default, set) : LDtkMap.LDtkMap_Level; // FIXME: Replace with your data level type
+	public var currLevel(default, set) : LDtkMap.LDtkMap_Level;
 	public function set_currLevel(l : LDtkMap.LDtkMap_Level) {
 		currLevel = l;
 		initLevel();
