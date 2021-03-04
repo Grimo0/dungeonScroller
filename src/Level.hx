@@ -75,7 +75,7 @@ class Level extends dn.Process {
 		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
 
 		// Update camera zoom
-		// Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
+		Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	override function onResize() {
@@ -83,7 +83,7 @@ class Level extends dn.Process {
 		super.onResize();
 
 		// Update camera zoom
-		// Const.SCALE = game.w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
+		Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	public function render() {}
