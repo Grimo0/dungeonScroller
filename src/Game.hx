@@ -6,7 +6,7 @@ import hxd.Key;
 class Game extends Process {
 	public static var ME : Game;
 
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var cas : Array<dn.heaps.Controller.ControllerAccess>;
 	public var fx : Fx;
 	public var camera : Camera;
 	public var scroller : h2d.Layers;
@@ -25,9 +25,14 @@ class Game extends Process {
 	public function new() {
 		super(Main.ME);
 		ME = this;
-		ca = Main.ME.controller.createAccess("game");
-		ca.setLeftDeadZone(0.2);
-		ca.setRightDeadZone(0.2);
+
+		cas = new Array<dn.heaps.Controller.ControllerAccess>();
+		for (ctrler in Main.ME.controllers) {
+			var ca = ctrler.createAccess("game");
+			ca.setLeftDeadZone(0.2);
+			ca.setRightDeadZone(0.2);
+			cas.push(ca);
+		}
 		createRootInLayers(Main.ME.root, Const.MAIN_LAYER_GAME);
 
 		scroller = new h2d.Layers();
@@ -191,7 +196,7 @@ class Game extends Process {
 		if (!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
 			#if hl
 			// Exit
-			if (ca.isKeyboardPressed(Key.ESCAPE)) {
+			if (cas[0].isKeyboardPressed(Key.ESCAPE)) {
 				if (!cd.hasSetS("exitWarn", 3)) {}
 				else
 					return Main.ME.startMainMenu();
@@ -199,7 +204,7 @@ class Game extends Process {
 			#end
 
 			// Restart
-			if (ca.selectPressed())
+			if (cas[0].selectPressed())
 				Main.ME.startGame();
 		}
 	}

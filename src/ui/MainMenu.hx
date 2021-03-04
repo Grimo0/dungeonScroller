@@ -11,7 +11,7 @@ class MainMenu extends Process {
 		super(Main.ME);
 		ME = this;
 
-		ca = Main.ME.controller.createAccess("mainMenu");
+		ca = Main.ME.controllers[0].createAccess("mainMenu");
 		ca.setLeftDeadZone(0.2);
 		ca.setRightDeadZone(0.2);
 
