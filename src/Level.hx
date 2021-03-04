@@ -1,15 +1,20 @@
+import en.Unit;
+
 class Level extends dn.Process {
 	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
 	public var fx(get, never) : Fx;
 	inline function get_fx() return game.fx;
 
-	public var currLevel(default, set) : LDtkMap.LDtkMap_Level; // FIXME: Replace with your data level type
+	public var currLevel(default, set) : LDtkMap.LDtkMap_Level;
 	public function set_currLevel(l : LDtkMap.LDtkMap_Level) {
 		currLevel = l;
 		initLevel();
 		return currLevel;
 	}
+
+	public var gridSize(get, never) : Int;
+	inline function get_gridSize() return currLevel.l_Floor.gridSize;
 
 	public var wid(get, never) : Int;
 	inline function get_wid() return currLevel.pxWid;
@@ -18,8 +23,8 @@ class Level extends dn.Process {
 	inline function get_hei() return currLevel.pxHei;
 
 	public function new() {
-		super(Game.ME);
-		createRootInLayers(Game.ME.scroller, Const.GAME_SCROLLER_BG);
+		super(game);
+		createRootInLayers(game.scroller, Const.GAME_SCROLLER_LEVEL);
 	}
 
 	public inline function isValid(cx, cy)
@@ -39,40 +44,46 @@ class Level extends dn.Process {
 	}
 
 	public function initLevel() {
+		game.scroller.add(root, Const.GAME_SCROLLER_LEVEL);
+		root.removeChildren();
+
 		// Get level background image
 		if (currLevel.hasBgImage()) {
 			var background = currLevel.getBgBitmap();
-			root.addChild(background);
+			root.add(background, Const.GAME_LEVEL_BG);
 		}
 
-		root.addChild(currLevel.l_Floor.render());
+		root.add(currLevel.l_Floor.render(), Const.GAME_LEVEL_FLOOR);
 
 		for (player in currLevel.l_Entities.all_Player) {
 			// Read h2d.Tile based on the "type" enum value from the entity
-			var tile = Assets.world.getEnumTile(player.entityType);
+			var tile = Assets.world.getEnumTile(player.f_Type);
+			if (tile == null) return;
 
-			// Apply the same pivot coord as the Entity to the Tile
-			// (in this case, the pivot is the bottom-center point of the tile)
-			tile.setCenterRatio(player.pivotX, player.pivotY);
+			var p = new Unit(player.identifier);
+			p.spr.tile.switchTexture(tile);
+			p.spr.tile.setPosition(tile.x, tile.y);
+			p.spr.tile.setSize(tile.width, tile.height);
+			p.spr.tile.setCenterRatio(player.pivotX, player.pivotY);
+			p.setPosCell(player.cx, player.cy);
 
-			// Display it
-			var bitmap = new h2d.Bitmap(tile);
-			root.addChild(bitmap);
-			bitmap.x = player.pixelX;
-			bitmap.y = player.pixelY;
+			game.camera.trackTarget(p, true);
+
+			break; // Only one player
 		};
 
-		root.addChild(currLevel.l_Ceiling.render());
+		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
 
 		// Update camera zoom
-		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	override function onResize() {
+		if (currLevel == null) return;
 		super.onResize();
 
 		// Update camera zoom
-		Const.SCALE = Game.ME.w() / (Const.MAX_CELLS_PER_WIDTH * Const.GRID);
+		Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);
 	}
 
 	public function render() {}

@@ -205,6 +205,15 @@ class Game extends Process {
 	}
 
 	function updateImGui() {
+		var natArray = new hl.NativeArray<Single>(1);
+
+		natArray[0] = Const.MAX_CELLS_PER_WIDTH;
+		if (ImGui.sliderFloat('Const.MAX_CELLS_PER_WIDTH', natArray, 0, 100, '%.0f')) {
+			Const.MAX_CELLS_PER_WIDTH = Std.int(natArray[0]);
+			Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * level.gridSize);
+			scroller.setScale(Const.SCALE);
+		}
+
 		var scenes = Assets.world.levels;
 		ImGui.comboWithArrow('currScene', Assets.world.levels.indexOf(level.currLevel), scenes,
 			(i : Int) -> Assets.world.levels[i].identifier,

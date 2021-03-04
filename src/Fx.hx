@@ -90,12 +90,12 @@ class Fx extends dn.Process {
 
 	public function markerCell(cx : Int, cy : Int, ?sec = 3.0, ?c = 0xFF00FF) {
 		#if debug
-		var p = allocTopAdd(getTile("fxCircle"), (cx + 0.5) * Const.GRID, (cy + 0.5) * Const.GRID);
+		var p = allocTopAdd(getTile("fxCircle"), (cx + 0.5) * level.gridSize, (cy + 0.5) * level.gridSize);
 		p.setFadeS(1, 0, 0.06);
 		p.colorize(c);
 		p.lifeS = sec;
 
-		var p = allocTopAdd(getTile("pixel"), (cx + 0.5) * Const.GRID, (cy + 0.5) * Const.GRID);
+		var p = allocTopAdd(getTile("pixel"), (cx + 0.5) * level.gridSize, (cy + 0.5) * level.gridSize);
 		p.setFadeS(1, 0, 0.06);
 		p.colorize(c);
 		p.setScale(2);
@@ -119,7 +119,7 @@ class Fx extends dn.Process {
 		var tf = new h2d.Text(Assets.fontTiny, topNormalSb);
 		tf.text = txt;
 
-		var p = allocTopAdd(getTile("fxCircle"), (cx + 0.5) * Const.GRID, (cy + 0.5) * Const.GRID);
+		var p = allocTopAdd(getTile("fxCircle"), (cx + 0.5) * level.gridSize, (cy + 0.5) * level.gridSize);
 		p.colorize(0x0080FF);
 		p.alpha = 0.6;
 		p.lifeS = 0.3;
@@ -131,7 +131,7 @@ class Fx extends dn.Process {
 	}
 
 	inline function collides(p : HParticle, offX = 0., offY = 0.) {
-		return level.hasCollision(Std.int((p.x + offX) / Const.GRID), Std.int((p.y + offY) / Const.GRID));
+		return level.hasCollision(Std.int((p.x + offX) / level.gridSize), Std.int((p.y + offY) / level.gridSize));
 	}
 
 	public function flashBangS(c : UInt, a : Float, ?t = 0.1) {
