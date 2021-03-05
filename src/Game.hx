@@ -207,7 +207,7 @@ class Game extends Process {
 				Main.ME.startGame();
 		}
 	}
-
+	#if debug
 	function updateImGui() {
 		var natArray = new hl.NativeArray<Single>(1);
 
@@ -225,6 +225,7 @@ class Game extends Process {
 		);
 		ImGui.separator();
 	}
+	#end
 
 	override function postUpdate() {
 		super.postUpdate();
