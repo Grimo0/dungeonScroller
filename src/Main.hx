@@ -5,7 +5,7 @@ import hxd.Key;
 class Main extends dn.Process {
 	public static var ME : Main;
 
-	public var controller : dn.heaps.Controller;
+	public var controllers = new Array<dn.heaps.Controller>();
 
 	public var debug = false;
 
@@ -30,16 +30,18 @@ class Main extends dn.Process {
 		Lang.init("en");
 
 		// Game controller
-		controller = new dn.heaps.Controller(s);
-		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT, Key.Q, Key.A);
-		controller.bind(AXIS_LEFT_X_POS, Key.RIGHT, Key.D);
-		controller.bind(AXIS_LEFT_Y_POS, Key.UP, Key.Z, Key.W);
-		controller.bind(AXIS_LEFT_Y_NEG, Key.DOWN, Key.S);
-		controller.bind(X, Key.F, Key.E);
-		controller.bind(A, Key.SPACE);
-		controller.bind(B, Key.ENTER, Key.NUMPAD_ENTER);
-		controller.bind(SELECT, Key.R);
-		controller.bind(START, Key.ESCAPE);
+		for (i in 0...2) {
+			var ctrler = new dn.heaps.Controller(s);
+			ctrler.bind(AXIS_LEFT_X_NEG, Key.LEFT, Key.Q, Key.A);
+			ctrler.bind(AXIS_LEFT_X_POS, Key.RIGHT, Key.D);
+			ctrler.bind(AXIS_LEFT_Y_POS, Key.UP, Key.Z, Key.W);
+			ctrler.bind(AXIS_LEFT_Y_NEG, Key.DOWN, Key.S);
+			ctrler.bind(A, Key.ENTER, Key.NUMPAD_ENTER);
+			ctrler.bind(B, Key.ESCAPE);
+			ctrler.bind(SELECT, Key.R);
+			ctrler.bind(START, Key.ESCAPE);
+			controllers.push(ctrler);
+		}
 
 		// Focus helper (process that suspend the game when the focus is lost)
 		// TODO: Implement our own Focus Helper
@@ -130,19 +132,25 @@ class Main extends dn.Process {
 			debug = !debug;
 			if (!debug) {
 				imguiCaptureMouse = false;
-				controller.unlock();
+				for (c in controllers) {
+					c.unlock();
+				}
 			}
 		}
 
 		if (debug) {
 			if (ImGui.wantCaptureMouse()) {
-				if (!imguiCaptureMouse && !controller.isLocked()) {
+				if (!imguiCaptureMouse && !controllers[0].isLocked()) {
 					imguiCaptureMouse = true;
-					controller.lock();
+					for (c in controllers) {
+						c.lock();
+					}
 				}
 			} else if (imguiCaptureMouse) {
 				imguiCaptureMouse = false;
-				controller.unlock();
+				for (c in controllers) {
+					c.unlock();
+				}
 			}
 		}
 		#end
