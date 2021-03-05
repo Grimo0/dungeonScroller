@@ -13,6 +13,14 @@
 			"preLaunchTask": "HL debug"
 		},
 		{
+			"name": "HL release",
+			"request": "launch",
+			"type": "hl",
+			"hxml": "hl.dx.hxml",
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": "HL release"
+		},
+		{
 			"name": "Chrome JS debug",
 			"request": "launch",
 			"type": "chrome",
