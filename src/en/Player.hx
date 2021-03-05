@@ -36,7 +36,7 @@ class Player extends Unit {
 
 		if (!isJumping && level.getFloor(x, y) == 0) // No floor
 			kill(null);
-		if (!isCrouched && level.getCeiling(x, y) == 1) // Hit a ceiling
+		if (!isCrouched && level.getCeiling(x, y) != 0) // Hit a ceiling
 			kill(null);
 	}
 
