@@ -58,11 +58,6 @@ class Entity {
 	public var frictY = 0.82;
 	public var bumpFrict = 0.93;
 
-	public var dir(default, set) = 1;
-	inline function set_dir(v) {
-		return dir = v > 0 ? 1 : v < 0 ? -1 : dir;
-	}
-
 	public var footX(get, never) : Float;
 	inline function get_footX() return (cx + xr) * game.level.gridSize;
 	public var footY(get, never) : Float;
@@ -156,8 +151,6 @@ class Entity {
 	public function as<T : Entity>(c : Class<T>) : T return Std.downcast(this, c);
 
 	public inline function dirTo(e : Entity) return e.centerX < centerX ? -1 : 1;
-
-	public inline function dirToAng() return dir == 1 ? 0. : M.PI;
 
 	public inline function getMoveAng() return Math.atan2(dyTotal, dxTotal);
 
@@ -337,7 +330,7 @@ class Entity {
 	public function postUpdate() {
 		spr.x = (cx + xr) * game.level.gridSize;
 		spr.y = (cy + yr) * game.level.gridSize;
-		spr.scaleX = dir * sprScaleX * sprSquashX;
+		spr.scaleX = sprScaleX * sprSquashX;
 		spr.scaleY = sprScaleY * sprSquashY;
 		spr.visible = visible;
 
