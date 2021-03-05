@@ -1,4 +1,4 @@
-import en.Unit;
+import en.Player;
 
 class Level extends dn.Process {
 	public var game(get, never) : Game;
@@ -36,6 +36,12 @@ class Level extends dn.Process {
 	public inline function hasCollision(cx, cy) : Bool
 		return false; // TODO: collision with entities and obstacles
 
+	public inline function getFloor(cx, cy) : Int
+		return currLevel.l_Floor.getInt(cx, cy);
+
+	public inline function getCeiling(cx, cy) : Int
+		return currLevel.l_Ceiling.getInt(cx, cy);
+
 	override function init() {
 		super.init();
 
@@ -60,7 +66,7 @@ class Level extends dn.Process {
 			var tile = Assets.world.getEnumTile(player.f_Type);
 			if (tile == null) return;
 
-			var p = new Unit(player.identifier);
+			var p = new Player(player.identifier);
 			p.spr.tile.switchTexture(tile);
 			p.spr.tile.setPosition(tile.x, tile.y);
 			p.spr.tile.setSize(tile.width, tile.height);
