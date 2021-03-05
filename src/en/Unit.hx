@@ -6,10 +6,6 @@ class Unit extends Entity {
 	public var maxLife(default, null) : Int;
 	public var life(default, set) : Int;
 	public function set_life(v : Int) {
-		if (v < life) {
-			hit(life - v, null);
-			return life;
-		}
 		final maxHP = maxLife;
 		if (v > maxHP)
 			return life = Std.int(maxHP);
