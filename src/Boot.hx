@@ -1,5 +1,6 @@
+#if debug
 import imgui.ImGuiDrawable;
-import imgui.ImGui;
+#end
 
 class Boot extends hxd.App {
 	public static var ME : Boot;
@@ -10,13 +11,17 @@ class Boot extends hxd.App {
 	}
 
 	var speed = 1.0;
+	
+	#if debug
 	var imguiDrawable : ImGuiDrawable;
+	#end
 
 	// Engine ready
 	override function init() {
 		ME = this;
 		new Main(s2d);
 
+		#if debug
 		imguiDrawable = new ImGuiDrawable(s2d);
 		var style : ImGuiStyle = ImGui.getStyle();
 		style.WindowBorderSize = 0;
@@ -24,6 +29,7 @@ class Boot extends hxd.App {
 		style.WindowPadding.x = 2;
 		style.WindowPadding.y = 2;
 		ImGui.setStyle(style);
+		#end
 
 		onResize();
 	}
@@ -31,7 +37,9 @@ class Boot extends hxd.App {
 	override function onResize() {
 		super.onResize();
 
+		#if debug
 		ImGui.setDisplaySize(s2d.width, s2d.height);
+		#end
 
 		dn.Process.resizeAll();
 	}

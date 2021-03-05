@@ -1,4 +1,3 @@
-import imgui.ImGui;
 import ui.MainMenu;
 import hxd.Key;
 
@@ -101,6 +100,7 @@ class Main extends dn.Process {
 		#end
 	}
 
+	#if debug
 	function updateImGui() {
 		var halfBtnSize : ImVec2 = {x: ImGui.getColumnWidth() / 2 - 5, y: ImGui.getTextLineHeightWithSpacing()};
 		if (ImGui.button('New game', halfBtnSize)) {
@@ -120,6 +120,7 @@ class Main extends dn.Process {
 		}
 		ImGui.separator();
 	}
+	#end
 
 	#if debug
 	var imguiCaptureMouse = false;

@@ -1,5 +1,3 @@
-import imgui.ImGui;
-
 class Options {
 	public static var ME : Options;
 
@@ -19,6 +17,7 @@ class Options {
 		hxd.Save.save(this, 'save/options');
 	}
 
+	#if debug
 	public function imGuiDebugFields() {
 		var natArray = new hl.NativeArray<Single>(1);
 		var ref : hl.Ref<Bool>;
@@ -27,4 +26,5 @@ class Options {
 		if (ImGui.checkbox("invertY", ref))
 			invertY = ref.get();
 	}
+	#end
 }
