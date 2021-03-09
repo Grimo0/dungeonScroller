@@ -38,7 +38,7 @@ class Main extends dn.Process {
 			ctrler.bind(A, Key.ENTER, Key.NUMPAD_ENTER);
 			ctrler.bind(B, Key.ESCAPE);
 			ctrler.bind(SELECT, Key.R);
-			ctrler.bind(START, Key.ESCAPE);
+			ctrler.bind(START, Key.SPACE);
 			controllers.push(ctrler);
 		}
 

@@ -12,14 +12,20 @@ class Game extends Process {
 	public var level : Level;
 	public var hud : ui.Hud;
 
-	var curGameSpeed = 1.0;
+	public var curGameSpeed(default, null) = 1.0;
 	var slowMos : Map<String, {id : String, t : Float, f : Float}> = new Map();
 
 	public var locked = false;
 
+	public var started(default, null) = false;
+
 	var sav : GameSave = new GameSave();
 	
 	var flags : Map<String, Int> = new Map();
+
+	var controls = new Array<PlayerControl>();
+
+	public var player : en.Player;
 
 	public function new() {
 		super(Main.ME);
@@ -31,8 +37,17 @@ class Game extends Process {
 			ca.setLeftDeadZone(0.2);
 			ca.setRightDeadZone(0.2);
 			cas.push(ca);
+
+			controls.push(new PlayerControl(ca));
 		}
 		createRootInLayers(Main.ME.root, Const.MAIN_LAYER_GAME);
+
+		// TMP
+		controls[0].add(AXIS_LEFT_X_NEG, PlayerControl.EPlayerActions.left);
+		controls[0].add(AXIS_LEFT_X_POS, PlayerControl.EPlayerActions.right);
+		controls[0].add(AXIS_LEFT_Y_POS, PlayerControl.EPlayerActions.jump);
+		controls[0].add(AXIS_LEFT_Y_NEG, PlayerControl.EPlayerActions.crouch);
+		// /TMP
 
 		scroller = new h2d.Layers();
 		root.add(scroller, Const.GAME_SCROLLER);
@@ -182,6 +197,13 @@ class Game extends Process {
 	override function update() {
 		super.update();
 
+		if (!locked) {
+			if (cas[0].startPressed()) {
+				started = true;
+				player.dy = -0.01;
+			}
+		}
+
 		for (e in Entity.ALL)
 			if (!e.destroyed)
 				e.update();
@@ -208,6 +230,7 @@ class Game extends Process {
 		}
 	}
 
+	#if debug
 	function updateImGui() {
 		var natArray = new hl.NativeArray<Single>(1);
 
@@ -225,6 +248,7 @@ class Game extends Process {
 		);
 		ImGui.separator();
 	}
+	#end
 
 	override function postUpdate() {
 		super.postUpdate();

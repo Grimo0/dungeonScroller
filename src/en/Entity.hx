@@ -80,6 +80,13 @@ class Entity {
 	public var colorMatrix : h3d.Matrix;
 	public var sprScaleX = 1.0;
 	public var sprScaleY = 1.0;
+	public var sprScale(get, set) : Float;
+	public inline function get_sprScale() {
+		return sprScaleX;
+	}
+	public inline function set_sprScale(s) {
+		return sprScaleX = sprScaleY = s;
+	}
 	public var sprSquashX = 1.0;
 	public var sprSquashY = 1.0;
 	public var visible = true;
