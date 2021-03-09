@@ -15,7 +15,7 @@ class Unit extends Entity {
 	public var lastDmgSource(default, null) : Null<Entity> = null;
 
 	public function new(id : String) {
-		super();
+		super(Assets.entities);
 		this.id = id;
 
 		reset();

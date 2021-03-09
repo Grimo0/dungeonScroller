@@ -98,7 +98,7 @@ class Entity {
 	var debugBounds : Null<h2d.Graphics>;
 	var invalidateDebugBounds = false;
 
-	public function new(?x : Int, ?y : Int) {
+	public function new(?sprLib:SpriteLib, ?x : Int, ?y : Int) {
 		uid = Const.NEXT_UNIQ;
 		ALL.push(this);
 
@@ -108,7 +108,7 @@ class Entity {
 		if (x != null && y != null)
 			setPosCell(x, y);
 
-		spr = new HSprite(Assets.entities);
+		spr = new HSprite(sprLib);
 		game.level.root.add(spr, Const.GAME_LEVEL_ENTITIES);
 		spr.colorAdd = new h3d.Vector();
 		baseColor = new h3d.Vector();
