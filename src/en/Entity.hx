@@ -32,7 +32,7 @@ class Entity {
 	public var cx = 0;
 	public var cy = 0;
 	public var xr = 0.5;
-	public var yr = 1.0;
+	public var yr = 0.5;
 	public var hei(default, set) : Float = game.level.gridSize;
 	inline function set_hei(v) {
 		invalidateDebugBounds = true;
