@@ -224,38 +224,17 @@
 			"lineOpacity": 1,
 			"hollow": false,
 			"color": "#94D9B3",
-			"renderMode": "Ellipse",
+			"renderMode": "Tile",
 			"showName": true,
-			"tilesetId": null,
-			"tileId": null,
-			"tileRenderMode": "FitInside",
+			"tilesetId": 54,
+			"tileId": 0,
+			"tileRenderMode": "Cover",
 			"maxCount": 0,
 			"limitScope": "PerLevel",
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
 			"pivotY": 0.5,
-			"fieldDefs": [
-				{
-					"identifier": "Type",
-					"__type": "LocalEnum.EntityType",
-					"uid": 59,
-					"type": { "id": "F_Enum", "params": [53] },
-					"isArray": false,
-					"canBeNull": false,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayPos": "Above",
-					"editorAlwaysShow": false,
-					"editorCutLongValues": true,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLangageMode": null
-				}
-			]
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -285,7 +264,7 @@
 			"savedSelections": [],
 			"cachedPixelData": { "opaqueTiles": "0", "averageColors": "2d56" }
 		}
-	], "enums": [{ "identifier": "EntityType", "uid": 53, "values": [{ "id": "Player", "tileId": 0, "__tileSrcRect": [0,0,64,64] }], "iconTilesetUid": 54, "externalRelPath": null, "externalFileChecksum": null }], "externalEnums": [], "levelFields": [] },
+	], "enums": [], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
 			"identifier": "Tutorial",
@@ -418,21 +397,12 @@
 							"__identifier": "Player",
 							"__grid": [16,32],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1056,2080],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -686,21 +656,12 @@
 							"__identifier": "Player",
 							"__grid": [16,35],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1056,2272],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -983,21 +944,12 @@
 							"__identifier": "Player",
 							"__grid": [16,35],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1056,2272],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -1261,21 +1213,12 @@
 							"__identifier": "Player",
 							"__grid": [15,36],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [992,2336],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -1556,21 +1499,12 @@
 							"__identifier": "Player",
 							"__grid": [16,35],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1056,2272],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -1884,21 +1818,12 @@
 							"__identifier": "Player",
 							"__grid": [17,35],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1120,2272],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},
@@ -2211,21 +2136,12 @@
 							"__identifier": "Player",
 							"__grid": [16,35],
 							"__pivot": [0.5,0.5],
-							"__tile": null,
+							"__tile": { "tilesetUid": 54, "srcRect": [0,0,64,64] },
 							"width": 64,
 							"height": 64,
 							"defUid": 5,
 							"px": [1056,2272],
-							"fieldInstances": [{
-								"__identifier": "Type",
-								"__value": "Player",
-								"__type": "LocalEnum.EntityType",
-								"defUid": 59,
-								"realEditorValues": [{
-									"id": "V_String",
-									"params": ["Player"]
-								}]
-							}]
+							"fieldInstances": []
 						}
 					]
 				},

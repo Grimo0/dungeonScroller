@@ -61,17 +61,22 @@ class Level extends dn.Process {
 
 		root.add(currLevel.l_Floor.render(), Const.GAME_LEVEL_FLOOR);
 
-		for (player in currLevel.l_Entities.all_Player) {
-			// Read h2d.Tile based on the "type" enum value from the entity
-			var tile = Assets.world.getEnumTile(player.f_Type);
-			if (tile == null) return;
+		for (pEnt in currLevel.l_Entities.all_Player) {
+			// Read h2d.Tile
+			var tileset = Assets.world.tilesets.get(pEnt.defaultTileInfos.tilesetUid);
+			if (tileset == null)
+				continue;
+			var tile = tileset.getFreeTile(pEnt.defaultTileInfos.x, pEnt.defaultTileInfos.y, pEnt.defaultTileInfos.w, pEnt.defaultTileInfos.h);
+			if (tile == null)
+				continue;
 
-			var p = new Player(player.identifier);
+			// Create the player
+			var p = new Player(pEnt.identifier);
 			p.spr.tile.switchTexture(tile);
 			p.spr.tile.setPosition(tile.x, tile.y);
 			p.spr.tile.setSize(tile.width, tile.height);
-			p.spr.tile.setCenterRatio(player.pivotX, player.pivotY);
-			p.setPosCell(player.cx, player.cy);
+			p.spr.tile.setCenterRatio(pEnt.pivotX, pEnt.pivotY);
+			p.setPosCell(pEnt.cx, pEnt.cy);
 
 			game.camera.trackTarget(p, true);
 
@@ -85,7 +90,8 @@ class Level extends dn.Process {
 	}
 
 	override function onResize() {
-		if (currLevel == null) return;
+		if (currLevel == null)
+			return;
 		super.onResize();
 
 		// Update camera zoom
