@@ -26,7 +26,7 @@ class PlayerControl extends Process {
 	}
 
 	override function update() {
-		if (Game.ME.player.isDead()) return;
+		if (Game.ME.player.isDead() || Game.ME.locked || !Game.ME.started) return;
 		
 		for (key => action in controls) {
 			if (ca.isPressed(key)) {
