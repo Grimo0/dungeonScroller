@@ -59,17 +59,17 @@ class Entity {
 	public var bumpFrict = 0.93;
 
 	public var footX(get, never) : Float;
-	inline function get_footX() return (cx + xr) * game.level.gridSize;
+	inline function get_footX() return centerX;
 	public var footY(get, never) : Float;
-	inline function get_footY() return (cy + yr) * game.level.gridSize;
+	inline function get_footY() return centerY + 0.5 * hei;
 	public var headX(get, never) : Float;
 	inline function get_headX() return footX;
 	public var headY(get, never) : Float;
 	inline function get_headY() return footY - hei;
 	public var centerX(get, never) : Float;
-	inline function get_centerX() return footX;
+	inline function get_centerX() return (cx + xr) * game.level.gridSize;
 	public var centerY(get, never) : Float;
-	inline function get_centerY() return footY;
+	inline function get_centerY() return (cy + yr) * game.level.gridSize;
 	public var prevFrameFootX : Float = -Const.INFINITE;
 	public var prevFrameFootY : Float = -Const.INFINITE;
 
@@ -80,13 +80,6 @@ class Entity {
 	public var colorMatrix : h3d.Matrix;
 	public var sprScaleX = 1.0;
 	public var sprScaleY = 1.0;
-	public var sprScale(get, set) : Float;
-	public inline function get_sprScale() {
-		return sprScaleX;
-	}
-	public inline function set_sprScale(s) {
-		return sprScaleX = sprScaleY = s;
-	}
 	public var sprSquashX = 1.0;
 	public var sprSquashY = 1.0;
 	public var visible = true;

@@ -3,17 +3,32 @@ package en;
 import haxe.Exception;
 
 class Player extends Unit {
-	var ceilingThreshold = 0.1;
+	var ceilingRadius = 0.35;
+
+	var shadowFilter : h2d.filter.DropShadow;
 
 	public var isJumping = false;
 	public var isCrouched = false;
+	public var height(default, set) = 1.;
+	public function set_height(h : Float) {
+		sprScaleX = sprScaleY = 0.6 + 0.4 * h;
+		shadowFilter.alpha = 0.25 + Math.pow(0.25, h);//0.25 / h;//
+		shadowFilter.distance = 2 + h * 4;
+		return height = h;
+	}
 
 	public function new(id : String) {
 		maxLife = 1;
+		hei = game.level.gridSize * 0.5;
+		radius = 0.5 * hei;
 
 		super(id);
 
 		frictY = 1.;
+
+		shadowFilter = new h2d.filter.DropShadow(6, M.PIHALF, 0, 0.5, 20, true);
+		spr.filter = shadowFilter;
+		height = 1.;
 
 		if (game.player != null && !game.player.destroyed)
 			throw new Exception("Trying to create a second player entity");
@@ -31,9 +46,9 @@ class Player extends Unit {
 		isJumping = true;
 		final timeToAir = 0.1;
 		final dist = 1.5;
-		game.tw.createS(sprScale, 1.2, timeToAir).onEnd = () -> {
+		game.tw.createS(height, 1.5, timeToAir).onEnd = () -> {
 			cd.setF('jump', dist / M.fabs(dy), () -> {
-				game.tw.createS(sprScale, 1, timeToAir).onEnd = () -> { isJumping = false; }
+				game.tw.createS(height, 1, timeToAir).onEnd = () -> { isJumping = false; }
 			});
 		};
 	}
@@ -43,9 +58,9 @@ class Player extends Unit {
 		isCrouched = true;
 		final timeToGround = 0.1;
 		final dist = 1.5;
-		game.tw.createS(sprScale, 0.8, timeToGround).onEnd = () -> {
+		game.tw.createS(height, 0.5, timeToGround).onEnd = () -> {
 			cd.setF('crouch', dist / M.fabs(dy), () -> {
-				game.tw.createS(sprScale, 1, timeToGround).onEnd = () -> { isCrouched = false; }
+				game.tw.createS(height, 1, timeToGround).onEnd = () -> { isCrouched = false; }
 			});
 		};
 	}
@@ -57,6 +72,7 @@ class Player extends Unit {
 			kill(null);
 
 		var x = cx;
+		var ceilingThreshold = ceilingRadius - radius / game.level.gridSize;
 		if (xr > 1 - ceilingThreshold)
 			x++;
 		else if (xr < ceilingThreshold)
