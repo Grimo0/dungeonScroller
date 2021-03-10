@@ -3,7 +3,7 @@ package en;
 import haxe.Exception;
 
 class Player extends Unit {
-	var collisionThreshold = 0.25;
+	var ceilingThreshold = 0.1;
 
 	public var isJumping = false;
 	public var isCrouched = false;
@@ -52,18 +52,19 @@ class Player extends Unit {
 
 	override function postUpdate() {
 		super.postUpdate();
-
-		var x = cx;
-		if (xr > 1 - collisionThreshold)
-			x++;
-		else if (xr < collisionThreshold)
-			x--;
-		var y = cy;
-		if (yr < collisionThreshold)
-			y--;
-
+		
 		if (!isJumping && level.getFloor(cx, cy) == 0) // No floor
 			kill(null);
+
+		var x = cx;
+		if (xr > 1 - ceilingThreshold)
+			x++;
+		else if (xr < ceilingThreshold)
+			x--;
+		var y = cy;
+		if (yr < ceilingThreshold)
+			y--;
+
 		if (!isCrouched && level.getCeiling(x, y) != 0) // Hit a ceiling
 			kill(null);
 	}

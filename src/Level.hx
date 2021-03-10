@@ -1,5 +1,3 @@
-import en.Player;
-
 class Level extends dn.Process {
 	public var game(get, never) : Game;
 	inline function get_game() return Game.ME;
@@ -59,31 +57,37 @@ class Level extends dn.Process {
 			root.add(background, Const.GAME_LEVEL_BG);
 		}
 
+		// Clouds
+		root.add(currLevel.l_Scenery.render(), Const.GAME_LEVEL_BG);
+
+		// Floor
 		root.add(currLevel.l_Floor.render(), Const.GAME_LEVEL_FLOOR);
 
-		for (pEnt in currLevel.l_Entities.all_Player) {
+		// Ceiling
+		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
+
+		// Player 
+		for (p in currLevel.l_Entities.all_Player) {
 			// Read h2d.Tile
-			var tileset = Assets.world.tilesets.get(pEnt.defaultTileInfos.tilesetUid);
+			var tileset = Assets.world.tilesets.get(p.defaultTileInfos.tilesetUid);
 			if (tileset == null)
 				continue;
-			var tile = tileset.getFreeTile(pEnt.defaultTileInfos.x, pEnt.defaultTileInfos.y, pEnt.defaultTileInfos.w, pEnt.defaultTileInfos.h);
+			var tile = tileset.getFreeTile(p.defaultTileInfos.x, p.defaultTileInfos.y, p.defaultTileInfos.w, p.defaultTileInfos.h);
 			if (tile == null)
 				continue;
 
 			// Create the player
-			var p = new Player(pEnt.identifier);
-			p.spr.tile.switchTexture(tile);
-			p.spr.tile.setPosition(tile.x, tile.y);
-			p.spr.tile.setSize(tile.width, tile.height);
-			p.spr.tile.setCenterRatio(pEnt.pivotX, pEnt.pivotY);
-			p.setPosCell(pEnt.cx, pEnt.cy);
+			var pEnt = new en.Player(p.identifier);
+			pEnt.spr.tile.switchTexture(tile);
+			pEnt.spr.tile.setPosition(tile.x, tile.y);
+			pEnt.spr.tile.setSize(tile.width, tile.height);
+			pEnt.spr.tile.setCenterRatio(p.pivotX, p.pivotY);
+			pEnt.setPosCell(p.cx, p.cy);
 
-			game.camera.trackTarget(p, true);
+			game.camera.trackTarget(pEnt, true);
 
 			break; // Only one player
 		};
-
-		root.add(currLevel.l_Ceiling.render(), Const.GAME_LEVEL_CEILING);
 
 		// Update camera zoom
 		Const.SCALE = w() / (Const.MAX_CELLS_PER_WIDTH * gridSize);

@@ -197,10 +197,10 @@ class Game extends Process {
 	override function update() {
 		super.update();
 
-		if (!locked) {
+		if (!started) {
 			if (cas[0].startPressed()) {
 				started = true;
-				player.dy = -0.01;
+				player.dy = level.currLevel.f_playerSpeed;
 			}
 		}
 
