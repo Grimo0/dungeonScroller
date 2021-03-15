@@ -15,5 +15,10 @@
 	},
 	"whitespace": {
 		"typeHintColonPolicy": "around"
+	},
+	"wrapping": {
+		"callParameter": {
+			"defaultWrap": "keep"
+		}
 	}
 }
