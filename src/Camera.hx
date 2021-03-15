@@ -11,6 +11,10 @@ class Camera extends dn.Process {
 	public var hei(get, never) : Int;
 	function get_hei() return M.ceil(Game.ME.h() / Const.SCALE);
 
+	public var frict = 0.89;
+	public var targetS = 0.006;
+	public var targetDeadZone = 5;
+
 	var bumpOffX = 0.;
 	var bumpOffY = 0.;
 
@@ -55,20 +59,17 @@ class Camera extends dn.Process {
 
 		// Follow target entity
 		if (target != null) {
-			var s = 0.006;
-			var deadZone = 5;
 			var tx = target.headX;
 			var ty = target.headY;
 
 			var d = M.dist(x, y, tx, ty);
-			if (d >= deadZone) {
+			if (d >= targetDeadZone) {
 				var a = Math.atan2(ty - y, tx - x);
-				dx += Math.cos(a) * (d - deadZone) * s * tmod;
-				dy += Math.sin(a) * (d - deadZone) * s * tmod;
+				dx += Math.cos(a) * (d - targetDeadZone) * targetS * tmod;
+				dy += Math.sin(a) * (d - targetDeadZone) * targetS * tmod;
 			}
 		}
 
-		var frict = 0.89;
 		x += dx * tmod;
 		dx *= Math.pow(frict, tmod);
 
