@@ -9,7 +9,9 @@
 	},
 	"sameLine": {
 		"anonFunctionBody": "keep",
-		"functionBody": "keep"
+		"functionBody": "keep",
+		"expressionIf": "keep",
+		"ifBody": "keep"
 	},
 	"whitespace": {
 		"typeHintColonPolicy": "around"
