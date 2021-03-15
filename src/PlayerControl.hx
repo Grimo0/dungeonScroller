@@ -25,14 +25,14 @@ class PlayerControl extends Process {
 		controls.set(key, action);
 	}
 
-	override function update() {
+	override function preUpdate() {
 		if (Game.ME.player.isDead() || Game.ME.locked || !Game.ME.started) return;
 		
 		for (key => action in controls) {
 			if (ca.isPressed(key)) {
 				switch action {
-					case left: Game.ME.player.cx--;
-					case right: Game.ME.player.cx++;
+					case left: Game.ME.player.left();
+					case right: Game.ME.player.right();
 					case jump: Game.ME.player.jump();
 					case crouch: Game.ME.player.crouch();
 				}

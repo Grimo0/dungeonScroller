@@ -54,6 +54,8 @@ class Game extends Process {
 		scroller.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
 
 		camera = new Camera();
+		camera.frict = 0.1;
+		camera.targetS = 0.1;
 		level = new Level();
 		fx = new Fx();
 		hud = new ui.Hud();
@@ -246,6 +248,12 @@ class Game extends Process {
 			(i : Int) -> Assets.world.levels[i].identifier,
 			(i : Int) -> transition(Assets.world.levels[i].uid)
 		);
+		ImGui.separator();
+		
+		natArray[0] = player.dy;
+		if (ImGui.sliderFloat('Player speed', natArray, 0, 100, '%.0f')) {
+			player.dy = Std.int(natArray[0]);
+		}
 		ImGui.separator();
 	}
 	#end
