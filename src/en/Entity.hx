@@ -70,8 +70,8 @@ class Entity {
 	inline function get_centerX() return (cx + xr) * game.level.gridSize;
 	public var centerY(get, never) : Float;
 	inline function get_centerY() return (cy + yr) * game.level.gridSize;
-	public var prevFrameFootX : Float = -Const.INFINITE;
-	public var prevFrameFootY : Float = -Const.INFINITE;
+	public var prevFrameCXR : Float = -Const.INFINITE;
+	public var prevFrameCYR : Float = -Const.INFINITE;
 
 	// Display
 	public var spr : HSprite;
@@ -130,9 +130,9 @@ class Entity {
 	}
 
 	function onPosManuallyChanged() {
-		if (M.dist(footX, footY, prevFrameFootX, prevFrameFootY) > game.level.gridSize * 2) {
-			prevFrameFootX = footX;
-			prevFrameFootY = footY;
+		if (M.dist(cx + xr, cy + yr, prevFrameCXR, prevFrameCYR) > 2.) {
+			prevFrameCXR = cx + xr;
+			prevFrameCYR = cy + yr;
 		}
 	}
 
@@ -368,8 +368,8 @@ class Entity {
 	}
 
 	public function finalUpdate() {
-		prevFrameFootX = footX;
-		prevFrameFootY = footY;
+		prevFrameCXR = cx + xr;
+		prevFrameCYR = cy + yr;
 	}
 
 	public function fixedUpdate() {}
