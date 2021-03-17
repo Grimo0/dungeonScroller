@@ -84,6 +84,7 @@ class Level extends dn.Process {
 			pEnt.spr.tile.setPosition(tile.x, tile.y);
 			pEnt.spr.tile.setSize(tile.width, tile.height);
 			pEnt.spr.tile.setCenterRatio(p.pivotX, p.pivotY);
+			pEnt.spr.tile.scaleToSize(p.width, p.height);
 			pEnt.setPosCell(p.cx, p.cy);
 
 			game.camera.trackTarget(pEnt, true);
