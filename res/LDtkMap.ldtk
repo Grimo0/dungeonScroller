@@ -652,7 +652,13 @@
 			"bgPivotY": 0.5,
 			"__bgPos": { "topLeftPx": [0,0], "scale": [2048,5.875], "cropRect": [0,0,1,512] },
 			"externalRelPath": null,
-			"fieldInstances": [{ "__identifier": "playerSpeed", "__value": -0.1, "__type": "Float", "defUid": 70, "realEditorValues": [] }],
+			"fieldInstances": [{
+				"__identifier": "playerSpeed",
+				"__value": -0.08,
+				"__type": "Float",
+				"defUid": 70,
+				"realEditorValues": [{ "id": "V_Float", "params": [-0.08] }]
+			}],
 			"layerInstances": [
 				{
 					"__identifier": "Scenery",
