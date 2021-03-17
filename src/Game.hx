@@ -246,13 +246,13 @@ class Game extends Process {
 		var scenes = Assets.world.levels;
 		ImGui.comboWithArrow('currScene', Assets.world.levels.indexOf(level.currLevel), scenes,
 			(i : Int) -> Assets.world.levels[i].identifier,
-			(i : Int) -> transition(Assets.world.levels[i].uid)
-		);
+			(i : Int) -> transition(Assets.world.levels[i].uid));
 		ImGui.separator();
-		
-		natArray[0] = player.dy;
-		if (ImGui.sliderFloat('Player speed', natArray, 0, 100, '%.0f')) {
-			player.dy = Std.int(natArray[0]);
+
+		natArray[0] = level.currLevel.f_playerSpeed;
+		if (ImGui.sliderFloat('Player speed', natArray, -1, 0, '%.3f')) {
+			level.currLevel.f_playerSpeed = natArray[0];
+			if (!player.isDead() && !locked && started) player.dy = natArray[0];
 		}
 		ImGui.separator();
 	}
