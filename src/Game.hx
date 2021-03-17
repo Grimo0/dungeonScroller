@@ -1,3 +1,4 @@
+import ldtk.Level.NeighbourDir;
 import en.Entity;
 import dn.Process;
 import hxd.Key;
@@ -52,7 +53,6 @@ class Game extends Process {
 
 		scroller = new h2d.Layers();
 		root.add(scroller, Const.GAME_SCROLLER);
-		scroller.filter = new h2d.filter.ColorMatrix(); // force rendering for pixel perfect
 
 		camera = new Camera();
 		camera.frict = 0.1;
@@ -94,6 +94,7 @@ class Game extends Process {
 
 	function startLevel(?levelUID : Int) {
 		locked = false;
+		started = false;
 
 		scroller.removeChildren();
 
@@ -106,7 +107,7 @@ class Game extends Process {
 	public function transition(levelUID : Null<Int>, event : String = null, ?onDone : Void->Void) {
 		locked = true;
 
-		tw.createS(root.alpha, 0, #if debug 0 #else 1 #end).onEnd = function() {
+		Main.ME.tw.createS(root.alpha, 0, #if debug 0 #else 1 #end).onEnd = function() {
 			if (levelUID == null) {
 				save();
 
@@ -118,7 +119,7 @@ class Game extends Process {
 				flags.set(level.identifier, 1);
 				save();
 
-				tw.createS(root.alpha, 1, #if debug 0 #else 1 #end);
+				Main.ME.tw.createS(root.alpha, 1, #if debug 0 #else 1 #end);
 			}
 
 			if (onDone != null)
@@ -129,11 +130,25 @@ class Game extends Process {
 	public function reachedEnd() {
 		var m = new ui.Modal();
 		m.win.backgroundTile = null;
-		var tf = new h2d.Text(Assets.fontMedium, m.win);
+		var tf = new h2d.Text(Assets.fontLarge, m.win);
 		tf.text = Lang.t._('Well done !');
 		tf.textAlign = h2d.Text.Align.Center;
 
 		pause();
+
+		Main.ME.cd.setF('end', 3., () -> {
+			Main.ME.tw.createS(m.win.alpha, 0., TType.TEaseIn, .3).onEnd = () -> {
+				m.destroy();
+				
+				for (n in level.currLevel.neighbours) {
+					if (n.dir == NeighbourDir.East) {
+						transition(n.levelUid);
+						return;
+					}
+				}
+				transition(null);
+			};
+		});
 	}
 
 	public function onCdbReload() {}
