@@ -77,6 +77,8 @@ class Level extends dn.Process {
 				continue;
 
 			// Create the player
+			if (game.player != null)
+				game.player.dispose();
 			var pEnt = new en.Player(p.identifier);
 			pEnt.spr.tile.switchTexture(tile);
 			pEnt.spr.tile.setPosition(tile.x, tile.y);
