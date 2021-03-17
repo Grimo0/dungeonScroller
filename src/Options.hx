@@ -1,7 +1,7 @@
 class Options {
 	public static var ME : Options;
 
-	public var invertY = false;
+	public var speedMul = 1.;
 	
 	public function new() {
 		ME = this;
@@ -10,7 +10,7 @@ class Options {
 	public function load() {
 		var sav = hxd.Save.load(this, 'save/options');
 
-		invertY = sav.invertY;
+		speedMul = sav.speedMul;
 	}
 
 	public function save() {
@@ -20,11 +20,10 @@ class Options {
 	#if debug
 	public function imGuiDebugFields() {
 		var natArray = new hl.NativeArray<Single>(1);
-		var ref : hl.Ref<Bool>;
 		
-		ref = new hl.Ref(invertY);
-		if (ImGui.checkbox("invertY", ref))
-			invertY = ref.get();
+		natArray[0] = speedMul;
+		if (ImGui.sliderFloat('speedMul', natArray, 0, 10, '%.1f'))
+			speedMul = natArray[0];
 	}
 	#end
 }

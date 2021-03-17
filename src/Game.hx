@@ -214,7 +214,7 @@ class Game extends Process {
 		if (!started) {
 			if (cas[0].startPressed()) {
 				started = true;
-				player.dy = level.currLevel.f_playerSpeed;
+				player.dy = level.currLevel.f_playerSpeed * Options.ME.speedMul;
 			}
 		}
 
