@@ -58,11 +58,12 @@ class Player extends Unit {
 	public function jump() {
 		if (isJumping || isCrouched) return;
 		isJumping = true;
-		final timeToAir = 0.1;
 		final dist = 1.5;
-		game.tw.createS(height, 1.5, timeToAir).onEnd = () -> {
-			cd.setF('jump', dist / M.fabs(dy), () -> {
-				game.tw.createS(height, 1, timeToAir).onEnd = () -> isJumping = false;
+		final totalTime = dist / M.fabs(dy);
+		final timeToAir = 0.2 * Options.ME.speedMul;
+		game.tw.createS(height, 1.5, TType.TEaseOut, timeToAir).onEnd = () -> {
+			cd.setF('jump', totalTime - 2 * timeToAir, () -> {
+				game.tw.createS(height, 1., TType.TEaseIn, timeToAir).onEnd = () -> isJumping = false;
 			});
 		};
 	}
@@ -70,11 +71,28 @@ class Player extends Unit {
 	public function crouch() {
 		if (isJumping) return;
 		isCrouched = true;
-		final timeToGround = 0.1;
-		final dist = 1.5;
-		game.tw.createS(height, 0.5, timeToGround).onEnd = () -> {
-			cd.setF('crouch', dist / M.fabs(dy), () -> {
-				game.tw.createS(height, 1, timeToGround).onEnd = () -> isCrouched = false;
+
+		var dist = 0.;
+		var x = cx;
+		var y = cy;
+		var ceilingThreshold = ceilingRadius - radius / game.level.gridSize;
+		if (xr > 1 - ceilingThreshold) x++;
+		else if (xr < ceilingThreshold) x--;
+		if (yr < ceilingThreshold) {
+			y--;
+			dist = 1. - yr;
+		} else 
+			dist = yr - ceilingThreshold;
+		while (level.getCeiling(x, --y) != 0) {
+			dist++;
+		}
+		if (dist < 1.) dist = 1.;
+
+		final totalTime = dist / M.fabs(dy);
+		final timeToGround = 0.2 * Options.ME.speedMul;
+		game.tw.createS(height, 0.5, TType.TEaseIn, timeToGround).onEnd = () -> {
+			cd.setF('crouch', totalTime - 2 * timeToGround, () -> {
+				game.tw.createS(height, 1., TType.TEaseOut, timeToGround).onEnd = () -> isCrouched = false;
 			});
 		};
 	}
