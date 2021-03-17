@@ -46,6 +46,9 @@ class Main extends dn.Process {
 		// TODO: Implement our own Focus Helper
 		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
 
+		new Options();
+		Options.ME.load();
+
 		// Start
 		#if debug
 		delayer.addF(startGame, 1);
