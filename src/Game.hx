@@ -99,6 +99,7 @@ class Game extends Process {
 
 		level.currLevel = Assets.world.getLevel(levelUID != null ? levelUID : sav.levelUID);
 
+		resume();
 		Process.resizeAll();
 	}
 
@@ -131,6 +132,8 @@ class Game extends Process {
 		var tf = new h2d.Text(Assets.fontMedium, m.win);
 		tf.text = Lang.t._('Well done !');
 		tf.textAlign = h2d.Text.Align.Center;
+
+		pause();
 	}
 
 	public function onCdbReload() {}

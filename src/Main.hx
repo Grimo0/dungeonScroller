@@ -44,7 +44,7 @@ class Main extends dn.Process {
 
 		// Focus helper (process that suspend the game when the focus is lost)
 		// TODO: Implement our own Focus Helper
-		new dn.heaps.GameFocusHelper(Boot.ME.s2d, Assets.fontMedium);
+		new GameFocusHelper();
 
 		new Options();
 		Options.ME.load();
