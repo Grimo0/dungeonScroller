@@ -13,6 +13,7 @@ class Game extends Process {
 	public var hud : ui.Hud;
 
 	public var curGameSpeed(default, null) = 1.0;
+
 	var slowMos : Map<String, {id : String, t : Float, f : Float}> = new Map();
 
 	public var locked = false;
@@ -20,7 +21,7 @@ class Game extends Process {
 	public var started(default, null) = false;
 
 	var sav : GameSave = new GameSave();
-	
+
 	var flags : Map<String, Int> = new Map();
 
 	var controls = new Array<PlayerControl>();
@@ -107,7 +108,7 @@ class Game extends Process {
 		tw.createS(root.alpha, 0, #if debug 0 #else 1 #end).onEnd = function() {
 			if (levelUID == null) {
 				save();
-				
+
 				Main.ME.startMainMenu();
 			} else {
 				startLevel(levelUID);
@@ -122,6 +123,14 @@ class Game extends Process {
 			if (onDone != null)
 				onDone();
 		}
+	}
+
+	public function reachedEnd() {
+		var m = new ui.Modal();
+		m.win.backgroundTile = null;
+		var tf = new h2d.Text(Assets.fontMedium, m.win);
+		tf.text = Lang.t._('Well done !');
+		tf.textAlign = h2d.Text.Align.Center;
 	}
 
 	public function onCdbReload() {}
@@ -220,8 +229,7 @@ class Game extends Process {
 			#if hl
 			// Exit
 			if (cas[0].isKeyboardPressed(Key.ESCAPE)) {
-				if (!cd.hasSetS("exitWarn", 3)) {}
-				else
+				if (cd.hasSetS("exitWarn", 3))
 					return Main.ME.startMainMenu();
 			}
 			#end

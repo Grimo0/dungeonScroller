@@ -79,10 +79,12 @@ class Player extends Unit {
 		};
 	}
 
-	public function endLevel() {
+	public function reachedEnd() {
 		frictX = 0.9;
 		frictY = 0.9;
 		game.camera.stopTracking();
+
+		game.reachedEnd();
 	}
 
 	override function update() {
@@ -117,7 +119,7 @@ class Player extends Unit {
 
 		// End tile !
 		if (!isJumping && level.getFloor(cx, cy) == 2) {
-			endLevel();
+			reachedEnd();
 			return;
 		}
 
