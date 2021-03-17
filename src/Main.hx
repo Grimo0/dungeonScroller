@@ -110,7 +110,7 @@ class Main extends dn.Process {
 			hxd.Save.delete('save/game');
 			delayer.addF(startGame, 1);
 		}
-		if (ImGui.treeNodeEx('Options')) {
+		if (Options.ME != null && ImGui.treeNodeEx('Options')) {
 			if (ImGui.button('Save', halfBtnSize))
 				Options.ME.save();
 			ImGui.sameLine(0, 5);
